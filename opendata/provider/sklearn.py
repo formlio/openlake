@@ -21,11 +21,11 @@ import typing
 
 import numpy
 import pandas
+from forml.io import dsl
+from openschema.sklearn import breast_cancer, iris
 from sklearn import datasets, utils
 
-from forml.io import dsl
 from opendata import provider
-from openschema.sklearn import breast_cancer, iris
 
 
 class BreastCancer(provider.Origin[utils.Bunch]):
@@ -35,14 +35,19 @@ class BreastCancer(provider.Origin[utils.Bunch]):
     def source(self) -> dsl.Queryable:
         return breast_cancer.Diagnostic
 
-    def fetch(self, columns: typing.Optional[typing.Iterable[dsl.Feature]],
-              predicate: typing.Optional[dsl.Feature]) -> utils.Bunch:
+    def fetch(
+        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
+    ) -> utils.Bunch:
         return datasets.load_breast_cancer()
 
-    def parse(self, content: utils.Bunch, columns: typing.Optional[typing.Iterable[dsl.Feature]],
-              predicate: typing.Optional[dsl.Feature]) -> pandas.DataFrame:
+    def parse(
+        self,
+        content: utils.Bunch,
+        columns: typing.Optional[typing.Iterable[dsl.Feature]],
+        predicate: typing.Optional[dsl.Feature],
+    ) -> pandas.DataFrame:
         data = numpy.column_stack([content['data'], content['target']])
-        return pandas.DataFrame(data, columns=[f.name for f in self.source.features])
+        return pandas.DataFrame(data, columns=[f.name for f in self.source.features])  # pylint: disable=not-an-iterable
 
 
 class Iris(provider.Origin[utils.Bunch]):
@@ -52,11 +57,16 @@ class Iris(provider.Origin[utils.Bunch]):
     def source(self) -> dsl.Queryable:
         return iris.Measurement
 
-    def fetch(self, columns: typing.Optional[typing.Iterable[dsl.Feature]],
-              predicate: typing.Optional[dsl.Feature]) -> utils.Bunch:
+    def fetch(
+        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
+    ) -> utils.Bunch:
         return datasets.load_iris()
 
-    def parse(self, content: utils.Bunch, columns: typing.Optional[typing.Iterable[dsl.Feature]],
-              predicate: typing.Optional[dsl.Feature]) -> pandas.DataFrame:
+    def parse(
+        self,
+        content: utils.Bunch,
+        columns: typing.Optional[typing.Iterable[dsl.Feature]],
+        predicate: typing.Optional[dsl.Feature],
+    ) -> pandas.DataFrame:
         data = numpy.column_stack([content['data'], content['target']])
-        return pandas.DataFrame(data, columns=[f.name for f in self.source.features])
+        return pandas.DataFrame(data, columns=[f.name for f in self.source.features])  # pylint: disable=not-an-iterable

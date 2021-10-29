@@ -64,8 +64,8 @@ class _Tables(dsl.Source.Visitor):
         self._match.add(source)
 
 
-class Feed(io.Feed, alias='opendata'):
-    """Opendata feed."""
+class Local(io.Feed, alias='opendata'):
+    """Local opendata feed."""
 
     class Reader(alchemy.Reader):
         """Extending the SQLAlchemy reader."""

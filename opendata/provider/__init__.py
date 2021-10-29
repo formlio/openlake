@@ -18,11 +18,13 @@
 Opendata providers.
 """
 import abc
+import pathlib
 import typing
 
 import pandas
 from forml.io import dsl
 
+from opendata import cache
 
 Format = typing.TypeVar('Format')
 
@@ -41,10 +43,25 @@ class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
         columns: typing.Optional[typing.Iterable[dsl.Feature]] = None,
         predicate: typing.Optional[dsl.Feature] = None,
     ) -> pandas.DataFrame:
-        frame = self.parse(self.fetch(columns, predicate), columns, predicate)
+        frame = self._load(columns, predicate)
         expected = {f.name for f in self.source.features}
         assert set(frame.columns) == expected, f'Column name mismatch: {expected.symmetric_difference(frame.columns)}'
         return frame.astype({f.name: f.kind.__native__ for f in self.source.features})
+
+    @property
+    def _cachedir(self) -> pathlib.Path:
+        """Root directory for this origin cache."""
+        return cache.DIR / self.__class__.__qualname__.lower()
+
+    def _load(
+        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
+    ) -> pandas.DataFrame:
+        """Content loader with caching capabilities."""
+        return cache.dataframe(
+            repr(tuple(columns or [])) + repr(predicate),
+            lambda: self.parse(self.fetch(columns, predicate), columns, predicate),
+            self._cachedir,
+        )
 
     @property
     def name(self) -> str:

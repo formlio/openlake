@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 """
-Fetcher implementations.
+Caching unit tests.
 """
-import abc
-import typing
+import pathlib
+from unittest import mock
 
-from forml.io import dsl
+import pandas
 
-from opendata import provider
+from opendata import cache
 
 
-class Mixin(typing.Generic[provider.Format], abc.ABC):
-    """Fetcher mixin base class."""
-
-    @abc.abstractmethod
-    def fetch(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> provider.Format:
-        """Fetch the content and return a file object."""
+def test_dataframe(tmp_path: pathlib.Path, frame: pandas.DataFrame):
+    """Test the dataframe caching."""
+    loader = mock.MagicMock()
+    loader.return_value = frame
+    assert cache.dataframe('foobar', loader, tmp_path).equals(frame)
+    loader.assert_called()
+    loader.reset_mock()
+    assert cache.dataframe('foobar', loader, tmp_path).equals(frame)
+    loader.assert_not_called()

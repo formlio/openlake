@@ -15,21 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 """
-Fetcher implementations.
+Fixtures.
 """
-import abc
-import typing
+import datetime
 
-from forml.io import dsl
-
-from opendata import provider
+import pandas
+import pytest
 
 
-class Mixin(typing.Generic[provider.Format], abc.ABC):
-    """Fetcher mixin base class."""
-
-    @abc.abstractmethod
-    def fetch(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> provider.Format:
-        """Fetch the content and return a file object."""
+@pytest.fixture(scope='function')
+def frame() -> pandas.DataFrame:
+    """Dataframe fixture."""
+    return pandas.DataFrame(
+        {
+            'foo': [1, 2, 3],
+            'bar': ['a', 'b', 'c'],
+            'baz': [datetime.datetime(2021, 10, 30), datetime.datetime(2021, 10, 31), datetime.datetime(2021, 11, 1)],
+        }
+    )

@@ -21,6 +21,20 @@ Setuptools script for Opendata package.
 
 import setuptools
 
+EXTRAS_DOC = {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme', 'sphinx-autoapi'}
+EXTRAS_TEST = {'pytest-runner', 'pytest-pylint', 'pytest-flake8', 'pytest-cov', 'pytest-xdist', 'pytest-black'}
+EXTRAS_DEV = EXTRAS_TEST | {
+    'flake8-colors',
+    'isort',
+    'pip-tools',
+    'pre-commit',
+    'pycln',
+}
+EXTRAS_KAGGLE = {'kaggle'}
+EXTRAS_SKLEARN = {'scikit-learn'}
+
+EXTRAS_ALL = EXTRAS_DOC | EXTRAS_DEV | EXTRAS_KAGGLE | EXTRAS_SKLEARN
+
 setuptools.setup(
     name='opendata',
     description='Public dataset feed',
@@ -32,12 +46,14 @@ setuptools.setup(
     license='Apache License 2.0',
     packages=setuptools.find_packages(include=['opendata*']),
     setup_requires=['setuptools', 'wheel', 'pytest-runner'],
-    tests_require=['pytest-runner', 'pytest-pylint', 'pytest-flake8'],
+    tests_require=list(EXTRAS_TEST),
     install_requires=['forml>=0.3.*', 'openschema', 'pandas', 'pyarrow'],
     extras_require={
-        'doc': {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme', 'sphinx-autoapi'},
-        'kaggle': {'kaggle'},
-        'sklearn': {'scikit-learn'},
+        'all': EXTRAS_ALL,
+        'dev': EXTRAS_DEV,
+        'doc': EXTRAS_DOC,
+        'kaggle': EXTRAS_KAGGLE,
+        'sklearn': EXTRAS_SKLEARN,
     },
     python_requires='>=3',
     classifiers=[
