@@ -99,7 +99,7 @@ numpy==1.21.3
     #   pyarrow
     #   scikit-learn
     #   scipy
-openschema==0.2.dev0
+openschema==0.3.dev1
     # via opendata (setup.py)
 packaging==21.2
     # via

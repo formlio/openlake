@@ -21,7 +21,7 @@ Setuptools script for Opendata package.
 
 import setuptools
 
-EXTRAS_DOC = {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme', 'sphinx-autoapi'}
+EXTRAS_DOC = {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme'}
 EXTRAS_TEST = {'pytest-runner', 'pytest-pylint', 'pytest-flake8', 'pytest-cov', 'pytest-xdist', 'pytest-black'}
 EXTRAS_DEV = EXTRAS_TEST | {
     'flake8-colors',

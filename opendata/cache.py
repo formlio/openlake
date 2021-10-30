@@ -32,9 +32,7 @@ LOGGER = logging.getLogger(__name__)
 
 def digest(key: str) -> str:
     """Get the hash digest for the key."""
-    msg = hashlib.sha256()
-    msg.update(key.encode())
-    return msg.hexdigest()
+    return hashlib.sha256(key.encode()).hexdigest()
 
 
 def dataframe(
@@ -47,5 +45,6 @@ def dataframe(
         return pandas.read_parquet(stored)
     LOGGER.debug('[%s] cache miss', key)
     frame = loader()
+    cachedir.mkdir(parents=True)
     frame.to_parquet(stored, index=False, engine='pyarrow', flavor='spark')
     return frame

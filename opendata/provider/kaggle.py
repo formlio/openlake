@@ -24,7 +24,7 @@ import typing
 import kaggle
 from forml import conf
 from forml.io import dsl
-from openschema.kaggle import titanic
+from openschema import kaggle as schema
 
 from opendata import fetcher, parser, provider
 
@@ -50,4 +50,4 @@ class Titanic(File, parser.CSV, provider.Origin):
 
     @property
     def source(self) -> dsl.Queryable:
-        return titanic.Passenger
+        return schema.Titanic

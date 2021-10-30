@@ -22,7 +22,7 @@ import typing
 import numpy
 import pandas
 from forml.io import dsl
-from openschema.sklearn import breast_cancer, iris
+from openschema import sklearn as schema
 from sklearn import datasets, utils
 
 from opendata import provider
@@ -33,7 +33,7 @@ class BreastCancer(provider.Origin[utils.Bunch]):
 
     @property
     def source(self) -> dsl.Queryable:
-        return breast_cancer.Diagnostic
+        return schema.BreastCancer
 
     def fetch(
         self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
@@ -55,7 +55,7 @@ class Iris(provider.Origin[utils.Bunch]):
 
     @property
     def source(self) -> dsl.Queryable:
-        return iris.Measurement
+        return schema.Iris
 
     def fetch(
         self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]

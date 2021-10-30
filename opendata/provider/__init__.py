@@ -69,7 +69,7 @@ class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
 
         Must be a valid identifier -> [_a-zA-Z][_a-zA-Z0-9]*
         """
-        return f'o{hash(self)}'
+        return repr(self.source)
 
     @property
     @abc.abstractmethod

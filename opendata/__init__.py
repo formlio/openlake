@@ -16,7 +16,6 @@
 # under the License.
 
 """Opendata ForML feed."""
-
 import types
 import typing
 
@@ -31,7 +30,7 @@ from sqlalchemy.engine import interfaces
 from opendata import provider
 from opendata.provider import kaggle, sklearn
 
-__version__ = '0.1.dev0'
+__version__ = '0.1.dev1'
 __author__ = 'ForML Authors'
 
 ORIGINS: typing.Iterable[provider.Origin] = {kaggle.Titanic(), sklearn.BreastCancer(), sklearn.Iris()}
@@ -64,11 +63,39 @@ class _Tables(dsl.Source.Visitor):
         self._match.add(source)
 
 
-class Local(io.Feed, alias='opendata'):
-    """Local opendata feed."""
+class Lite(io.Feed):
+    """Opendata feed."""
 
     class Reader(alchemy.Reader):
         """Extending the SQLAlchemy reader."""
+
+        class Backend(interfaces.Connectable):
+            """Serializable in-memory SQLite connection."""
+
+            def __init__(self):
+                self._engine: typing.Optional[interfaces.Connectable] = sqlalchemy.create_engine('sqlite://')
+
+            def __reduce__(self):
+                return self.__class__, tuple()
+
+            def connect(self, **kwargs):
+                return self._engine.connect(**kwargs)
+
+            def execute(self, object_, *multiparams, **params):
+                return self._engine.execute(object_, *multiparams, **params)
+
+            def scalar(self, object_, *multiparams, **params):
+                return self._engine.scalar(object_, *multiparams, **params)
+
+            # pylint: disable=protected-access
+            def _run_visitor(self, visitorcallable, element, **kwargs):
+                return self._engine._run_visitor(visitorcallable, element, **kwargs)
+
+            def _execute_clauseelement(self, elem, multiparams=None, params=None):
+                return self._engine._execute_clauseelement(elem, multiparams, params)
+
+            def __getattr__(self, item):
+                return getattr(self._engine, item)
 
         def __init__(
             self,
@@ -77,15 +104,14 @@ class Local(io.Feed, alias='opendata'):
             origins: typing.Iterable[provider.Origin],
             **kwargs,
         ):
-            self._connection: interfaces.Connectable = sqlalchemy.create_engine('sqlite://')
             self._loaded: set[dsl.Queryable] = set()
             self._origins: dict[dsl.Queryable, provider.Origin] = {o.source: o for o in origins}
-            super().__init__(sources, features, self._connection, **kwargs)
+            super().__init__(sources, features, self.Backend(), **kwargs)
 
         def __call__(self, query: dsl.Query) -> layout.ColumnMajor:
             tables = _Tables.extract(query)
             for origin in (self._origins[t] for t in tables if t not in self._loaded and not self._loaded.add(t)):
-                origin().to_sql(origin.name, self._connection, index=False)
+                origin().to_sql(origin.name, self._kwargs['con'], index=False)
             return super().__call__(query)
 
     def __init__(self, *origins: provider.Origin, **readerkw):

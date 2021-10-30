@@ -30,9 +30,9 @@ Opendata
 [![PyPI Downloads](https://img.shields.io/pypi/dm/opendata)](https://pypi.org/project/opendata/)
 
 
-Opendata is a programmatic feed of public datasets described using the [ForML Dataset DSL
-API](https://docs.forml.io/en/latest/dsl.html).
-
+Opendata is a reference feed of the public datasets described using the
+[Openschema catalog](https://openschema.readthedocs.io/en/latest/) and implementing the
+[ForML Feed API](https://docs.forml.io/en/latest/feed.html).
 
 Resources
 ---------
