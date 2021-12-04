@@ -47,7 +47,7 @@ setuptools.setup(
     packages=setuptools.find_packages(include=['openlake*']),
     setup_requires=['setuptools', 'wheel', 'pytest-runner'],
     tests_require=list(EXTRAS_TEST),
-    install_requires=['forml>=0.3.*', 'openschema', 'pandas', 'pyarrow'],
+    install_requires=['forml[sql]>=0.3.*', 'openschema', 'pandas', 'pyarrow', 'sqlalchemy'],
     extras_require={
         'all': EXTRAS_ALL,
         'dev': EXTRAS_DEV,
