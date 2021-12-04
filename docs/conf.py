@@ -32,14 +32,14 @@ import sys
 
 sys.path.insert(0, os.path.abspath('..'))
 
-import opendata  # noqa: E402
+import openlake  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
-project = 'Opendata'
+project = 'Openlake'
 
 # The full version, including alpha/beta/rc tags
-release = opendata.__version__
+release = openlake.__version__
 
 
 # -- General configuration ---------------------------------------------------

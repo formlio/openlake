@@ -14,41 +14,22 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-
-"""Parser implementations."""
-
+"""
+Fetcher implementations.
+"""
 import abc
-import types
 import typing
 
-import pandas
 from forml.io import dsl
 
-from opendata import provider
+from openlake import provider
 
 
 class Mixin(typing.Generic[provider.Format], abc.ABC):
-    """Parser mixin base class."""
+    """Fetcher mixin base class."""
 
     @abc.abstractmethod
-    def parse(
-        self,
-        content: provider.Format,
-        columns: typing.Optional[typing.Iterable[dsl.Feature]],
-        predicate: typing.Optional[dsl.Feature],
-    ) -> pandas.DataFrame:
-        """Load the origin dataset."""
-
-
-class CSV(Mixin[typing.IO], metaclass=abc.ABCMeta):
-    """CSV parser mixin."""
-
-    CSV_PARAMS: typing.Mapping = types.MappingProxyType({})
-
-    def parse(
-        self,
-        content: typing.IO,
-        columns: typing.Optional[typing.Iterable[dsl.Feature]],
-        predicate: typing.Optional[dsl.Feature],
-    ) -> pandas.DataFrame:
-        return pandas.read_csv(content, **self.CSV_PARAMS)
+    def fetch(
+        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
+    ) -> provider.Format:
+        """Fetch the content and return a file object."""

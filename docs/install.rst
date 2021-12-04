@@ -16,16 +16,16 @@
 Installation
 ============
 
-To install Opendata, simply use ``pip``::
+To install Openlake, simply use ``pip``::
 
-    pip install --constraints https://raw.githubusercontent.com/formlio/opendata/main/constraints.txt opendata
+    pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt openlake
 
 
 Configuration
 -------------
 
-This Opendata feed becomes available to ForML projects after referencing it from
-the :doc:`platform configuration<forml:platform>`. Following is the example configuration file enabling the Opendata
+This Openlake feed becomes available to ForML projects after referencing it from
+the :doc:`platform configuration<forml:platform>`. Following is the example configuration file enabling the Openlake
 feed::
 
     logcfg = "logging.ini"
@@ -49,10 +49,10 @@ feed::
     path = "/tmp/forml"
 
     [FEED]
-    default = ["opendata"]
+    default = ["openlake"]
 
-    [FEED.opendata]
-    provider = "opendata:Lite"
+    [FEED.openlake]
+    provider = "openlake:Local"
 
     [SINK]
     default = "print"

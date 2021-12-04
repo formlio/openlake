@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 """
-Opendata caching.
+Openlake caching.
 """
 import hashlib
 import logging
@@ -25,7 +25,7 @@ import typing
 import pandas
 from forml import conf
 
-DIR = conf.USRDIR / 'opendata'
+DIR = conf.USRDIR / 'openlake'
 
 LOGGER = logging.getLogger(__name__)
 

@@ -17,27 +17,27 @@
  under the License.
 -->
 
-Opendata
+Openlake
 ========
 
-[![GitHub Build](https://github.com/formlio/opendata/workflows/CI%20Build/badge.svg)](https://github.com/formlio/opendata/actions/)
+[![GitHub Build](https://github.com/formlio/openlake/workflows/CI%20Build/badge.svg)](https://github.com/formlio/openlake/actions/)
 
-[![Documentation Status](https://readthedocs.org/projects/opendata/badge/?version=latest)](https://opendata.readthedocs.io/en/latest/)
+[![Documentation Status](https://readthedocs.org/projects/openlake/badge/?version=latest)](https://openlake.readthedocs.io/en/latest/)
 [![License](http://img.shields.io/:license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-![Python Version](https://img.shields.io/pypi/pyversions/opendata.svg)
-[![PyPI Version](https://badge.fury.io/py/opendata.svg)](https://pypi.org/project/opendata/)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/opendata)](https://pypi.org/project/opendata/)
+![Python Version](https://img.shields.io/pypi/pyversions/openlake.svg)
+[![PyPI Version](https://badge.fury.io/py/openlake.svg)](https://pypi.org/project/openlake/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/openlake)](https://pypi.org/project/openlake/)
 
 
-Opendata is a reference feed of the public datasets described using the
+Openlake is a reference feed of the public datasets described using the
 [Openschema catalog](https://openschema.readthedocs.io/en/latest/) and implementing the
 [ForML Feed API](https://docs.forml.io/en/latest/feed.html).
 
 Resources
 ---------
 
-* [Documentation](https://opendata.readthedocs.io/en/latest/)
-* [Source Code](https://github.com/formlio/opendata/)
-* [Issue Tracker](https://github.com/formlio/opendata/issues/)
-* [PyPI Repository](https://pypi.org/project/opendata/)
+* [Documentation](https://openlake.readthedocs.io/en/latest/)
+* [Source Code](https://github.com/formlio/openlake/)
+* [Issue Tracker](https://github.com/formlio/openlake/issues/)
+* [PyPI Repository](https://pypi.org/project/openlake/)

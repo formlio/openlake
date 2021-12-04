@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-"""Opendata ForML feed."""
+"""Openlake ForML feed."""
 import types
 import typing
 
@@ -27,8 +27,8 @@ from forml.lib.feed.reader.sql import alchemy
 from sqlalchemy import sql
 from sqlalchemy.engine import interfaces
 
-from opendata import provider
-from opendata.provider import kaggle, sklearn
+from openlake import provider
+from openlake.provider import kaggle, sklearn
 
 __version__ = '0.1.dev1'
 __author__ = 'ForML Authors'
@@ -63,8 +63,8 @@ class _Tables(dsl.Source.Visitor):
         self._match.add(source)
 
 
-class Lite(io.Feed):
-    """Opendata feed."""
+class Local(io.Feed):
+    """Openlake feed."""
 
     class Reader(alchemy.Reader):
         """Extending the SQLAlchemy reader."""

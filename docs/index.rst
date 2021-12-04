@@ -13,19 +13,19 @@
     specific language governing permissions and limitations
     under the License.
 
-Opendata Documentation
+Openlake Documentation
 ======================
 
-Opendata is a reference feed of the public datasets described using the :doc:`Openschema catalog<openschema>`
+Openlake is a reference feed of the public datasets described using the :doc:`Openschema catalog<openschema>`
 and implementing the :doc:`ForML Feed API<forml:feed>`.
 
 Resources
 ---------
 
-* `Documentation <https://opendata.readthedocs.io/en/latest/>`_
-* `Source Code <https://github.com/formlio/opendata/>`_
-* `Issue Tracker <https://github.com/formlio/opendata/issues/>`_
-* `PyPI Repository <https://pypi.org/project/opendata/>`_
+* `Documentation <https://openlake.readthedocs.io/en/latest/>`_
+* `Source Code <https://github.com/formlio/openlake/>`_
+* `Issue Tracker <https://github.com/formlio/openlake/issues/>`_
+* `PyPI Repository <https://pypi.org/project/openlake/>`_
 
 
 Content

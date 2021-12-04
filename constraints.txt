@@ -50,10 +50,10 @@ flake8==4.0.1
     #   flake8-colors
     #   pytest-flake8
 flake8-colors==0.1.9
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 forml==0.3.dev1
     # via
-    #   opendata (setup.py)
+    #   openlake (setup.py)
     #   openschema
 identify==2.3.1
     # via pre-commit
@@ -65,7 +65,7 @@ iniconfig==1.1.1
     # via pytest
 isort==5.9.3
     # via
-    #   opendata (setup.py)
+    #   openlake (setup.py)
     #   pylint
 jinja2==3.0.2
     # via
@@ -76,7 +76,7 @@ joblib==1.1.0
     #   forml
     #   scikit-learn
 kaggle==1.5.12
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 lazy-object-proxy==1.6.0
     # via astroid
 libcst==0.3.21
@@ -100,14 +100,14 @@ numpy==1.21.3
     #   scikit-learn
     #   scipy
 openschema==0.3.dev1
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 packaging==21.2
     # via
     #   forml
     #   pytest
     #   sphinx
 pandas==1.3.4
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pathspec==0.8.1
     # via
     #   black
@@ -115,7 +115,7 @@ pathspec==0.8.1
 pep517==0.12.0
     # via pip-tools
 pip-tools==6.4.0
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 platformdirs==2.4.0
     # via
     #   pylint
@@ -125,15 +125,15 @@ pluggy==1.0.0
 pockets==0.9.1
     # via sphinxcontrib-napoleon
 pre-commit==2.15.0
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 py==1.10.0
     # via
     #   pytest
     #   pytest-forked
 pyarrow==6.0.0
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pycln==1.0.3
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pycodestyle==2.8.0
     # via flake8
 pyflakes==2.4.0
@@ -153,19 +153,19 @@ pytest==6.2.5
     #   pytest-pylint
     #   pytest-xdist
 pytest-black==0.3.12
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pytest-cov==3.0.0
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pytest-flake8==1.0.7
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pytest-forked==1.3.0
     # via pytest-xdist
 pytest-pylint==0.18.0
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pytest-runner==5.3.1
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 pytest-xdist==2.4.0
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 python-dateutil==2.8.2
     # via
     #   kaggle
@@ -189,7 +189,7 @@ requests==2.26.0
     #   kaggle
     #   sphinx
 scikit-learn==1.0.1
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 scipy==1.7.1
     # via scikit-learn
 six==1.16.0
@@ -203,13 +203,13 @@ snowballstemmer==2.1.0
     # via sphinx
 sphinx==4.2.0
     # via
-    #   opendata (setup.py)
+    #   openlake (setup.py)
     #   sphinx-autoapi
     #   sphinx-rtd-theme
 sphinx-autoapi==1.8.4
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 sphinx-rtd-theme==1.0.0
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
@@ -219,7 +219,7 @@ sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
 sphinxcontrib-napoleon==0.7
-    # via opendata (setup.py)
+    # via openlake (setup.py)
 sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5

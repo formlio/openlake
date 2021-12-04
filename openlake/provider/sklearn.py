@@ -25,7 +25,7 @@ from forml.io import dsl
 from openschema import sklearn as schema
 from sklearn import datasets, utils
 
-from opendata import provider
+from openlake import provider
 
 
 class BreastCancer(provider.Origin[utils.Bunch]):

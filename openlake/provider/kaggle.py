@@ -15,21 +15,39 @@
 # specific language governing permissions and limitations
 # under the License.
 """
-Fetcher implementations.
+Kaggle datasets providers.
 """
 import abc
+import os
 import typing
 
+import kaggle
+from forml import conf
 from forml.io import dsl
+from openschema import kaggle as schema
 
-from opendata import provider
+from openlake import fetcher, parser, provider
 
 
-class Mixin(typing.Generic[provider.Format], abc.ABC):
-    """Fetcher mixin base class."""
+class File(fetcher.Mixin[typing.IO], metaclass=abc.ABCMeta):
+    """Kaggle file provider."""
 
-    @abc.abstractmethod
+    COMPETITION: str = abc.abstractmethod
+    FILE_NAME: str = abc.abstractmethod
+
     def fetch(
         self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> provider.Format:
-        """Fetch the content and return a file object."""
+    ) -> typing.IO:
+        kaggle.api.competition_download_file(self.COMPETITION, self.FILE_NAME, conf.tmpdir, force=True, quiet=True)
+        return open(os.path.join(conf.tmpdir, self.FILE_NAME), encoding='utf8')
+
+
+class Titanic(File, parser.CSV, provider.Origin):
+    """Titanic trainset."""
+
+    COMPETITION = 'titanic'
+    FILE_NAME = 'train.csv'
+
+    @property
+    def source(self) -> dsl.Queryable:
+        return schema.Titanic

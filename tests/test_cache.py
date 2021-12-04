@@ -22,7 +22,7 @@ from unittest import mock
 
 import pandas
 
-from opendata import cache
+from openlake import cache
 
 
 def test_dataframe(tmp_path: pathlib.Path, frame: pandas.DataFrame):

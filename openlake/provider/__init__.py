@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 """
-Opendata providers.
+Openlake providers.
 """
 import abc
 import pathlib
@@ -24,13 +24,13 @@ import typing
 import pandas
 from forml.io import dsl
 
-from opendata import cache
+from openlake import cache
 
 Format = typing.TypeVar('Format')
 
 
 class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
-    """Opendata origin base class."""
+    """Openlake origin base class."""
 
     def __hash__(self):
         return hash(self.source)

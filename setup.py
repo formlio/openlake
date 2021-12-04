@@ -16,7 +16,7 @@
 # under the License.
 
 """
-Setuptools script for Opendata package.
+Setuptools script for openlake package.
 """
 
 import setuptools
@@ -36,15 +36,15 @@ EXTRAS_SKLEARN = {'scikit-learn'}
 EXTRAS_ALL = EXTRAS_DOC | EXTRAS_DEV | EXTRAS_KAGGLE | EXTRAS_SKLEARN
 
 setuptools.setup(
-    name='opendata',
+    name='openlake',
     description='Public dataset feed',
     long_description=open('README.md', encoding='utf8').read(),  # pylint: disable=consider-using-with
     long_description_content_type='text/markdown',
-    url='https://github.com/formlio/opendata',
+    url='https://github.com/formlio/openlake',
     maintainer='ForML Development Team',
     maintainer_email='forml-dev@googlegroups.com',
     license='Apache License 2.0',
-    packages=setuptools.find_packages(include=['opendata*']),
+    packages=setuptools.find_packages(include=['openlake*']),
     setup_requires=['setuptools', 'wheel', 'pytest-runner'],
     tests_require=list(EXTRAS_TEST),
     install_requires=['forml>=0.3.*', 'openschema', 'pandas', 'pyarrow'],
