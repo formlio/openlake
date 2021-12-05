@@ -45,6 +45,6 @@ def dataframe(
         return pandas.read_parquet(stored)
     LOGGER.debug('[%s] cache miss', key)
     frame = loader()
-    cachedir.mkdir(parents=True)
+    cachedir.mkdir(parents=True, exist_ok=True)
     frame.to_parquet(stored, index=False, engine='pyarrow', flavor='spark')
     return frame

@@ -22,13 +22,17 @@ Setuptools script for openlake package.
 import setuptools
 
 EXTRAS_DOC = {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme'}
-EXTRAS_TEST = {'pytest-runner', 'pytest-pylint', 'pytest-flake8', 'pytest-cov', 'pytest-xdist', 'pytest-black'}
-EXTRAS_DEV = EXTRAS_TEST | {
+EXTRAS_DEV = {
     'flake8-colors',
     'isort',
     'pip-tools',
     'pre-commit',
     'pycln',
+    'pytest-cov',
+    'pytest-pylint',
+    'pytest-flake8',
+    'pytest-xdist',
+    'pytest-black',
 }
 EXTRAS_KAGGLE = {'kaggle'}
 EXTRAS_SKLEARN = {'scikit-learn'}
@@ -46,7 +50,6 @@ setuptools.setup(
     license='Apache License 2.0',
     packages=setuptools.find_packages(include=['openlake*']),
     setup_requires=['setuptools', 'wheel', 'pytest-runner'],
-    tests_require=list(EXTRAS_TEST),
     install_requires=['forml[sql]>=0.3.*', 'openschema', 'pandas', 'pyarrow', 'sqlalchemy'],
     extras_require={
         'all': EXTRAS_ALL,
