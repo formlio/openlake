@@ -49,8 +49,8 @@ setuptools.setup(
     maintainer_email='forml-dev@googlegroups.com',
     license='Apache License 2.0',
     packages=setuptools.find_packages(include=['openlake*']),
-    setup_requires=['setuptools', 'wheel', 'pytest-runner'],
-    install_requires=['forml[sql]>=0.3.*', 'openschema', 'pandas', 'pyarrow', 'sqlalchemy'],
+    setup_requires=['setuptools', 'wheel', 'forml[sql]'],
+    install_requires=['openschema', 'pandas', 'pyarrow', 'sqlalchemy'],
     extras_require={
         'all': EXTRAS_ALL,
         'dev': EXTRAS_DEV,
