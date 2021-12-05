@@ -18,8 +18,27 @@ Installation
 
 To install Openlake, simply use ``pip``::
 
-    pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt openlake
+    pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[providers]'
 
+
+Extra Features
+--------------
+
++-----------+---------------------------------------+----------------------------------------------------------------+
+| Feature   | Install Command                       | Description                                                    |
++===========+=======================================+================================================================+
+| all       | ``pip install 'openlake[all]'``       | All extra features                                             |
++-----------+---------------------------------------+----------------------------------------------------------------+
+| dev       | ``pip install 'openlake[dev]'``       | Openlake development tools                                     |
++-----------+---------------------------------------+----------------------------------------------------------------+
+| docs      | ``pip install 'openlake[docs]'``      | Documentation publishing dependencies                          |
++-----------+---------------------------------------+----------------------------------------------------------------+
+| kaggle    | ``pip install 'openlake[kaggle]'``    | Kaggle datasets provider                                       |
++-----------+---------------------------------------+----------------------------------------------------------------+
+| sklearn   | ``pip install 'openlake[sklearn]'``   | Sklearn datasets provider                                      |
++-----------+---------------------------------------+----------------------------------------------------------------+
+| providers | ``pip install 'openlake[providers]'`` | All providers combined                                         |
++-----------+---------------------------------------+----------------------------------------------------------------+
 
 Configuration
 -------------
