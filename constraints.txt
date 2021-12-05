@@ -48,11 +48,7 @@ flake8==4.0.1
 flake8-colors==0.1.9
     # via openlake (setup.py)
 forml==0.3.dev2
-    # via
-    #   openlake (setup.py)
-    #   openschema
-future==0.18.2
-    # via pyhive
+    # via openschema
 greenlet==1.1.2
     # via sqlalchemy
 identify==2.4.0
@@ -139,8 +135,6 @@ pyflakes==2.4.0
     # via flake8
 pygments==2.10.0
     # via sphinx
-pyhive==0.6.4
-    # via forml
 pylint==2.12.2
     # via pytest-pylint
 pyparsing==3.0.6
@@ -163,15 +157,12 @@ pytest-forked==1.3.0
     # via pytest-xdist
 pytest-pylint==0.18.0
     # via openlake (setup.py)
-pytest-runner==5.3.1
-    # via openlake (setup.py)
 pytest-xdist==2.4.0
     # via openlake (setup.py)
 python-dateutil==2.8.2
     # via
     #   kaggle
     #   pandas
-    #   pyhive
 python-slugify==5.0.2
     # via kaggle
 pytz==2021.3
@@ -221,9 +212,7 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 sqlalchemy==1.4.27
-    # via
-    #   forml
-    #   openlake (setup.py)
+    # via openlake (setup.py)
 text-unidecode==1.3
     # via python-slugify
 threadpoolctl==3.0.0

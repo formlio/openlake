@@ -16,7 +16,7 @@
 # under the License.
 
 [build-system]
-requires = ["setuptools", "wheel", "forml[sql]"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
