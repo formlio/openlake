@@ -30,7 +30,7 @@ from sqlalchemy.engine import interfaces
 from openlake import provider
 from openlake.provider import kaggle, sklearn
 
-__version__ = '0.1.dev1'
+__version__ = '0.1.dev2'
 __author__ = 'ForML Authors'
 
 ORIGINS: typing.Iterable[provider.Origin] = {kaggle.Titanic(), sklearn.BreastCancer(), sklearn.Iris()}

@@ -21,12 +21,15 @@ import abc
 import os
 import typing
 
-import kaggle
 from forml import conf
 from forml.io import dsl
 from openschema import kaggle as schema
-
 from openlake import fetcher, parser, provider
+
+try:
+    import kaggle
+except Exception as err:  # pylint: disable=broad-except
+    kaggle = provider.Unavailable('kaggle', err)
 
 
 class File(fetcher.Mixin[typing.IO], metaclass=abc.ABCMeta):

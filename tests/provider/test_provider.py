@@ -14,43 +14,31 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+"""
+Provider unit tests.
+"""
+# pylint: disable=no-self-use
+import pytest
 
-[tox]
-envlist =
-    clean
-    lint
-    py
-    coverage
+from openlake import provider as provmod
 
-[testenv]
-deps = -r constraints.txt
-extras = all
-commands = pytest -rxXs --junitxml=junit.xml --cov=openlake --cov-append --cov-report=term openlake tests
 
-[testenv:lint]
-deps =
-    -c constraints.txt
-    black
-    pylint
-    flake8
-;    flake8-docstrings
-commands =
-    black --check --diff openlake tests
-    pylint openlake tests
-    flake8 openlake tests
+class TestUnavailable:
+    """Unavailable provider tests."""
 
-[testenv:coverage]
-deps =
-    -c constraints.txt
-    coverage
-skip_install = true
-commands =
-    coverage xml
-    coverage html
+    @staticmethod
+    @pytest.fixture(scope='session')
+    def name() -> str:
+        """Provider name fixture."""
+        return 'foobar'
 
-[testenv:clean]
-deps =
-    -c constraints.txt
-    coverage
-skip_install = true
-commands = coverage erase
+    @staticmethod
+    @pytest.fixture(scope='session')
+    def provider(name: str) -> provmod.Unavailable:
+        """Unavailable provider fixture."""
+        return provmod.Unavailable(name, ImportError('baz'))
+
+    def test_access(self, provider: provmod.Unavailable, name: str):
+        """Unavailable provider access test."""
+        with pytest.raises(provmod.Unavailable.Error, match=name):
+            _ = provider.baz

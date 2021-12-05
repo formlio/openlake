@@ -21,14 +21,21 @@ import typing
 
 import numpy
 import pandas
+
 from forml.io import dsl
 from openschema import sklearn as schema
-from sklearn import datasets, utils
-
 from openlake import provider
 
+try:
+    from sklearn import datasets
+except Exception as err:  # pylint: disable=broad-except
+    datasets = provider.Unavailable('sklearn', err)
 
-class BreastCancer(provider.Origin[utils.Bunch]):
+if typing.TYPE_CHECKING:
+    from sklearn import utils
+
+
+class BreastCancer(provider.Origin['utils.Bunch']):
     """Breast cancer dataset."""
 
     @property
@@ -37,12 +44,12 @@ class BreastCancer(provider.Origin[utils.Bunch]):
 
     def fetch(
         self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> utils.Bunch:
+    ) -> 'utils.Bunch':
         return datasets.load_breast_cancer()
 
     def parse(
         self,
-        content: utils.Bunch,
+        content: 'utils.Bunch',
         columns: typing.Optional[typing.Iterable[dsl.Feature]],
         predicate: typing.Optional[dsl.Feature],
     ) -> pandas.DataFrame:
@@ -50,7 +57,7 @@ class BreastCancer(provider.Origin[utils.Bunch]):
         return pandas.DataFrame(data, columns=[f.name for f in self.source.features])  # pylint: disable=not-an-iterable
 
 
-class Iris(provider.Origin[utils.Bunch]):
+class Iris(provider.Origin['utils.Bunch']):
     """Iris dataset."""
 
     @property
@@ -59,12 +66,12 @@ class Iris(provider.Origin[utils.Bunch]):
 
     def fetch(
         self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> utils.Bunch:
+    ) -> 'utils.Bunch':
         return datasets.load_iris()
 
     def parse(
         self,
-        content: utils.Bunch,
+        content: 'utils.Bunch',
         columns: typing.Optional[typing.Iterable[dsl.Feature]],
         predicate: typing.Optional[dsl.Feature],
     ) -> pandas.DataFrame:

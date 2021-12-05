@@ -22,6 +22,8 @@ import pathlib
 import typing
 
 import pandas
+
+import forml
 from forml.io import dsl
 
 from openlake import cache
@@ -90,3 +92,19 @@ class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
         predicate: typing.Optional[dsl.Feature],
     ) -> pandas.DataFrame:
         """Load the origin dataset."""
+
+
+class Unavailable:
+    """Placeholder for missing provider functionality that raises upon access."""
+
+    class Error(forml.MissingError):
+        """Custom exception for indicating access to an unavailable provider."""
+
+    def __init__(self, name: str, error: Exception):
+        self.__name: str = name
+        self.__error: Exception = error
+
+    def __getattr__(self, item: str):
+        raise self.Error(
+            f'Provider {self.__name} not installed when accessing {item}: {str(self.__error)}.'
+        ) from self.__error
