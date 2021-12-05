@@ -30,10 +30,13 @@ EXTRAS_DEV = {
     'pycln',
     'pytest-cov',
 }
+
 EXTRAS_KAGGLE = {'kaggle'}
 EXTRAS_SKLEARN = {'scikit-learn'}
 
-EXTRAS_ALL = EXTRAS_DOCS | EXTRAS_DEV | EXTRAS_KAGGLE | EXTRAS_SKLEARN
+EXTRAS_PROVIDERS = EXTRAS_KAGGLE | EXTRAS_SKLEARN
+
+EXTRAS_ALL = EXTRAS_DOCS | EXTRAS_DEV | EXTRAS_PROVIDERS
 
 setuptools.setup(
     name='openlake',
@@ -53,6 +56,7 @@ setuptools.setup(
         'docs': EXTRAS_DOCS,
         'kaggle': EXTRAS_KAGGLE,
         'sklearn': EXTRAS_SKLEARN,
+        'providers': EXTRAS_PROVIDERS,
     },
     python_requires='>=3',
     classifiers=[
