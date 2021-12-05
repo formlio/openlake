@@ -21,7 +21,7 @@ Setuptools script for openlake package.
 
 import setuptools
 
-EXTRAS_DOC = {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme'}
+EXTRAS_DOCS = {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme'}
 EXTRAS_DEV = {
     'flake8-colors',
     'isort',
@@ -29,15 +29,11 @@ EXTRAS_DEV = {
     'pre-commit',
     'pycln',
     'pytest-cov',
-    'pytest-pylint',
-    'pytest-flake8',
-    'pytest-xdist',
-    'pytest-black',
 }
 EXTRAS_KAGGLE = {'kaggle'}
 EXTRAS_SKLEARN = {'scikit-learn'}
 
-EXTRAS_ALL = EXTRAS_DOC | EXTRAS_DEV | EXTRAS_KAGGLE | EXTRAS_SKLEARN
+EXTRAS_ALL = EXTRAS_DOCS | EXTRAS_DEV | EXTRAS_KAGGLE | EXTRAS_SKLEARN
 
 setuptools.setup(
     name='openlake',
@@ -54,7 +50,7 @@ setuptools.setup(
     extras_require={
         'all': EXTRAS_ALL,
         'dev': EXTRAS_DEV,
-        'doc': EXTRAS_DOC,
+        'docs': EXTRAS_DOCS,
         'kaggle': EXTRAS_KAGGLE,
         'sklearn': EXTRAS_SKLEARN,
     },
