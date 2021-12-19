@@ -21,8 +21,8 @@ To install Openlake, simply use ``pip``::
     pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[providers]'
 
 
-Extra Features
---------------
+Extra Options
+-------------
 
 +-----------+---------------------------------------+----------------------------------------------------------------+
 | Feature   | Install Command                       | Description                                                    |

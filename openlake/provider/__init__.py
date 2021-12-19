@@ -19,6 +19,7 @@ Openlake providers.
 """
 import abc
 import pathlib
+import types
 import typing
 
 import pandas
@@ -94,17 +95,17 @@ class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
         """Load the origin dataset."""
 
 
-class Unavailable:
+class Unavailable(types.ModuleType):
     """Placeholder for missing provider functionality that raises upon access."""
 
     class Error(forml.MissingError):
         """Custom exception for indicating access to an unavailable provider."""
 
     def __init__(self, name: str, error: Exception):
-        self.__name: str = name
-        self.__error: Exception = error
+        super().__init__(name)
+        self.__error__: Exception = error
 
     def __getattr__(self, item: str):
         raise self.Error(
-            f'Provider {self.__name} not installed when accessing {item}: {str(self.__error)}.'
-        ) from self.__error
+            f'Provider {self.__name__} not available when accessing {item}: {self.__error__}.'
+        ) from self.__error__

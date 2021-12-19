@@ -30,7 +30,7 @@ from sqlalchemy.engine import interfaces
 from openlake import provider
 from openlake.provider import kaggle, sklearn
 
-__version__ = '0.1.dev2'
+__version__ = '0.1.dev3'
 __author__ = 'ForML Authors'
 
 ORIGINS: typing.Iterable[provider.Origin] = {kaggle.Titanic(), sklearn.BreastCancer(), sklearn.Iris()}
@@ -75,6 +75,9 @@ class Local(io.Feed):
             def __init__(self):
                 self._engine: typing.Optional[interfaces.Connectable] = sqlalchemy.create_engine('sqlite://')
 
+            def __repr__(self):
+                return 'OpenLakeLocalBackend'
+
             def __reduce__(self):
                 return self.__class__, tuple()
 
@@ -108,11 +111,13 @@ class Local(io.Feed):
             self._origins: dict[dsl.Queryable, provider.Origin] = {o.source: o for o in origins}
             super().__init__(sources, features, self.Backend(), **kwargs)
 
-        def __call__(self, query: dsl.Query) -> layout.ColumnMajor:
+        def __call__(
+            self, query: dsl.Query, request: typing.Optional[io.Feed.Reader.RequestT] = None
+        ) -> layout.ColumnMajor:
             tables = _Tables.extract(query)
             for origin in (self._origins[t] for t in tables if t not in self._loaded and not self._loaded.add(t)):
                 origin().to_sql(origin.name, self._kwargs['con'], index=False)
-            return super().__call__(query)
+            return super().__call__(query, request)
 
     def __init__(self, *origins: provider.Origin, **readerkw):
         if not origins:

@@ -30,7 +30,7 @@ Openlake
 [![PyPI Downloads](https://img.shields.io/pypi/dm/openlake)](https://pypi.org/project/openlake/)
 
 
-Openlake is a reference feed of the public datasets described using the
+Openlake is an auxiliary feed of the public datasets described using the
 [Openschema catalog](https://openschema.readthedocs.io/en/latest/) and implementing the
 [ForML Feed API](https://docs.forml.io/en/latest/feed.html).
 
