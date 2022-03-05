@@ -16,7 +16,7 @@
 # under the License.
 
 """
-Setuptools script for openlake package.
+Setuptools script for Openlake package.
 """
 
 import setuptools
@@ -24,10 +24,12 @@ import setuptools
 EXTRAS_DEV = {
     'black',
     'flake8-colors',
+    'flake8-bugbear',
     'isort',
     'pip-tools',
     'pre-commit',
     'pycln',
+    'pylint',
     'pytest-cov',
 }
 

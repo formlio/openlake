@@ -22,9 +22,8 @@ import pathlib
 import types
 import typing
 
-import pandas
-
 import forml
+import pandas
 from forml.io import dsl
 
 from openlake import cache

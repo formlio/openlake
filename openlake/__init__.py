@@ -30,7 +30,7 @@ from sqlalchemy.engine import interfaces
 from openlake import provider
 from openlake.provider import kaggle, sklearn
 
-__version__ = '0.1.dev3'
+__version__ = '0.1.dev4'
 __author__ = 'ForML Authors'
 
 ORIGINS: typing.Iterable[provider.Origin] = {kaggle.Titanic(), sklearn.BreastCancer(), sklearn.Iris()}
@@ -63,7 +63,7 @@ class _Tables(dsl.Source.Visitor):
         self._match.add(source)
 
 
-class Local(io.Feed):
+class Local(io.Feed[sql.Selectable, sql.ColumnElement]):
     """Openlake feed."""
 
     class Reader(alchemy.Reader):
@@ -111,9 +111,7 @@ class Local(io.Feed):
             self._origins: dict[dsl.Queryable, provider.Origin] = {o.source: o for o in origins}
             super().__init__(sources, features, self.Backend(), **kwargs)
 
-        def __call__(
-            self, query: dsl.Query, request: typing.Optional[io.Feed.Reader.RequestT] = None
-        ) -> layout.ColumnMajor:
+        def __call__(self, query: dsl.Query, request: typing.Optional[io.Request] = None) -> layout.Tabular:
             tables = _Tables.extract(query)
             for origin in (self._origins[t] for t in tables if t not in self._loaded and not self._loaded.add(t)):
                 origin().to_sql(origin.name, self._kwargs['con'], index=False)
