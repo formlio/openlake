@@ -18,9 +18,13 @@
 Kaggle datasets providers.
 """
 import abc
+import collections
+import functools
 import os
+import pathlib
 import typing
 
+import forml
 from forml import conf
 from forml.io import dsl
 from openschema import kaggle as schema
@@ -33,24 +37,63 @@ except Exception as err:  # pylint: disable=broad-except
     kaggle = provider.Unavailable('kaggle', err)
 
 
-class File(fetcher.Mixin[typing.IO], metaclass=abc.ABCMeta):
+class Partition(provider.Partition, collections.namedtuple('Partition', 'columns, filename')):
+    """Kaggle data partition representation."""
+
+    columns: tuple[dsl.Column]
+    filename: str
+
+    def __new__(cls, columns: typing.Sequence[dsl.Column], filename: str):
+        return super().__new__(cls, tuple(columns), filename)
+
+    @functools.cached_property
+    def key(self) -> str:
+        return pathlib.Path(self.filename).with_suffix('').name
+
+
+class File(fetcher.Mixin[Partition, typing.IO], metaclass=abc.ABCMeta):
     """Kaggle file provider."""
 
     COMPETITION: str = abc.abstractmethod
-    FILE_NAME: str = abc.abstractmethod
+    PARTITIONS: tuple[Partition] = abc.abstractmethod
 
-    def fetch(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> typing.IO:
-        kaggle.api.competition_download_file(self.COMPETITION, self.FILE_NAME, conf.tmpdir, force=True, quiet=True)
-        return open(os.path.join(conf.tmpdir, self.FILE_NAME), encoding='utf8')
+    def partitions(
+        self, columns: typing.Collection[dsl.Column], predicate: typing.Optional[dsl.Predicate]
+    ) -> typing.Iterable[provider.Partition]:
+        columns = set(columns)
+        for partition in self.PARTITIONS:
+            if columns.issubset(partition.columns):
+                return tuple([partition])
+        raise forml.MissingError('No partition satisfy the column requirement')
+
+    def fetch(self, partition: Partition) -> typing.IO:
+        kaggle.api.competition_download_file(self.COMPETITION, partition.filename, conf.tmpdir, force=True, quiet=True)
+        return open(os.path.join(conf.tmpdir, partition.filename), encoding='utf8')
 
 
 class Titanic(File, parser.CSV, provider.Origin):
-    """Titanic trainset."""
+    """Titanic dataset."""
 
     COMPETITION = 'titanic'
-    FILE_NAME = 'train.csv'
+    PARTITIONS = (
+        Partition(
+            (
+                schema.Titanic.PassengerId,
+                schema.Titanic.Pclass,
+                schema.Titanic.Name,
+                schema.Titanic.Sex,
+                schema.Titanic.Age,
+                schema.Titanic.SibSp,
+                schema.Titanic.Parch,
+                schema.Titanic.Ticket,
+                schema.Titanic.Fare,
+                schema.Titanic.Cabin,
+                schema.Titanic.Embarked,
+            ),
+            'test.csv',
+        ),  # Testset partition
+        Partition(schema.Titanic.features, 'train.csv'),  # Trainset partition
+    )
 
     @property
     def source(self) -> dsl.Queryable:

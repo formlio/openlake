@@ -18,6 +18,7 @@
 Openlake providers.
 """
 import abc
+import logging
 import pathlib
 import types
 import typing
@@ -28,10 +29,34 @@ from forml.io import dsl
 
 from openlake import cache
 
-Format = typing.TypeVar('Format')
+LOGGER = logging.getLogger(__name__)
+
+_DTYPES: typing.Mapping[dsl.Any, type] = {
+    dsl.Integer(): int,
+    dsl.Float(): float,
+}
 
 
-class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
+class Partition(abc.ABC):
+    """Provider specific representation of a data partition."""
+
+    def __hash__(self):
+        return hash(self.key)
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and other.key == self.key
+
+    @property
+    @abc.abstractmethod
+    def key(self) -> str:
+        """Get the partition identifier key."""
+
+
+PayloadT = typing.TypeVar('PayloadT')
+PartitionT = typing.TypeVar('PartitionT', bound=Partition)
+
+
+class Origin(typing.Generic[PartitionT, PayloadT], metaclass=abc.ABCMeta):
     """Openlake origin base class."""
 
     def __hash__(self):
@@ -40,33 +65,41 @@ class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
     def __eq__(self, other):
         return isinstance(other, self.__class__) and other.source == self.source
 
-    def __call__(
-        self,
-        columns: typing.Optional[typing.Iterable[dsl.Feature]] = None,
-        predicate: typing.Optional[dsl.Feature] = None,
-    ) -> pandas.DataFrame:
-        frame = self._load(columns, predicate)
-        expected = {f.name for f in self.source.features}
-        assert set(frame.columns) == expected, f'Column name mismatch: {expected.symmetric_difference(frame.columns)}'
-        return frame.astype({f.name: f.kind.__native__ for f in self.source.features})
+    def __call__(self, partitions: typing.Iterable[PartitionT]) -> pandas.DataFrame:
+        LOGGER.info('Loading %s', self.key)
+        frame = self._load(partitions)
+        expected = {f.name: f.kind for f in self.source.features}
+        assert (actual := set(frame.columns)).issubset(expected), f'Unexpected column(s): {actual.difference(expected)}'
+        return frame.astype({c: _DTYPES.get(expected[c], expected[c].__type__) for c in frame.columns})
 
     @property
     def _cachedir(self) -> pathlib.Path:
         """Root directory for this origin cache."""
         return cache.DIR / self.__class__.__qualname__.lower()
 
-    def _load(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> pandas.DataFrame:
-        """Content loader with caching capabilities."""
-        return cache.dataframe(
-            repr(tuple(columns or [])) + repr(predicate),
-            lambda: self.parse(self.fetch(columns, predicate), columns, predicate),
-            self._cachedir,
-        )
+    def _load(self, partitions: typing.Iterable[PartitionT]) -> pandas.DataFrame:
+        """Content loader with caching capabilities.
+
+        Args:
+            partitions: Sequence of partitions to load.
+
+        Returns:
+            Data in Pandas DataFrame format.
+        """
+
+        def load(partition: PartitionT) -> pandas.DataFrame:
+            """Helper for cached loading of the given partition."""
+            LOGGER.debug('Loading %s:%s', self.key, partition.key)
+            return cache.dataframe(
+                f'{self.key}:{partition.key}',
+                lambda: self.parse(partition, self.fetch(partition)),
+                self._cachedir,
+            )
+
+        return pandas.concat((load(p) for p in partitions), ignore_index=True)
 
     @property
-    def name(self) -> str:
+    def key(self) -> str:
         """Name to be used for internal (unique) referencing.
 
         Must be a valid identifier -> [_a-zA-Z][_a-zA-Z0-9]*
@@ -79,19 +112,41 @@ class Origin(typing.Generic[Format], metaclass=abc.ABCMeta):
         """The source query this origin provides."""
 
     @abc.abstractmethod
-    def fetch(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> Format:
-        """Fetch the content and return a file object."""
+    def partitions(
+        self, columns: typing.Collection[dsl.Column], predicate: typing.Optional[dsl.Predicate]
+    ) -> typing.Iterable[PartitionT]:
+        """Get the partitions for the data selection.
+
+        Args:
+            columns: Iterable of required columns (more can be returned).
+            predicate: Optional push-down row filter (mismatching rows can still be returned).
+
+        Returns:
+            Iterable of partition identifiers containing the requested data.
+        """
 
     @abc.abstractmethod
-    def parse(
-        self,
-        content: Format,
-        columns: typing.Optional[typing.Iterable[dsl.Feature]],
-        predicate: typing.Optional[dsl.Feature],
-    ) -> pandas.DataFrame:
-        """Load the origin dataset."""
+    def fetch(self, partition: PartitionT) -> PayloadT:
+        """Fetch the content and return a data content object.
+
+        Args:
+            partition: Partition identifiers to be fetched.
+
+        Returns:
+            Data content object in a generic PayloadT to be parsed.
+        """
+
+    @abc.abstractmethod
+    def parse(self, partition: PartitionT, content: PayloadT) -> pandas.DataFrame:
+        """Parse the origin dataset.
+
+        Args:
+            partition: Partition identifier representing the content.
+            content: The data content object as returned by `.fetch()`.
+
+        Returns:
+            Data in Pandas DataFrame format.
+        """
 
 
 class Unavailable(types.ModuleType):

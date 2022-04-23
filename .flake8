@@ -4,3 +4,4 @@ enable-extensions=G
 max-line-length = 120
 ignore = E731,W504,I001,W503
 exclude = .git,__pycache__,.eggs,*.egg
+min_python_version = 3.9.0

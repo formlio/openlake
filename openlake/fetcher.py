@@ -25,11 +25,30 @@ from forml.io import dsl
 from openlake import provider
 
 
-class Mixin(typing.Generic[provider.Format], abc.ABC):
+class Mixin(typing.Generic[provider.PartitionT, provider.PayloadT], abc.ABC):
     """Fetcher mixin base class."""
 
     @abc.abstractmethod
-    def fetch(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> provider.Format:
-        """Fetch the content and return a file object."""
+    def partitions(
+        self, columns: typing.Collection[dsl.Column], predicate: typing.Optional[dsl.Predicate]
+    ) -> typing.Iterable[provider.PartitionT]:
+        """Get the partitions for the data selection.
+
+        Args:
+            columns: Iterable of required columns (more can be returned).
+            predicate: Optional push-down row filter (mismatching rows can still be returned).
+
+        Returns:
+            Iterable of partition identifiers containing the requested data.
+        """
+
+    @abc.abstractmethod
+    def fetch(self, partition: provider.PartitionT) -> provider.PayloadT:
+        """Fetch the content and return a data content object.
+
+        Args:
+            partition: Partition identifiers to be fetched.
+
+        Returns:
+            Data content object in a generic PayloadT to be parsed.
+        """

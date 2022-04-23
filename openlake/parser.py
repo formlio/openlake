@@ -22,33 +22,39 @@ import types
 import typing
 
 import pandas
-from forml.io import dsl
 
 from openlake import provider
 
 
-class Mixin(typing.Generic[provider.Format], abc.ABC):
+class Mixin(typing.Generic[provider.PartitionT, provider.PayloadT], abc.ABC):
     """Parser mixin base class."""
 
     @abc.abstractmethod
-    def parse(
-        self,
-        content: provider.Format,
-        columns: typing.Optional[typing.Iterable[dsl.Feature]],
-        predicate: typing.Optional[dsl.Feature],
-    ) -> pandas.DataFrame:
-        """Load the origin dataset."""
+    def parse(self, partition: provider.PartitionT, content: provider.PayloadT) -> pandas.DataFrame:
+        """Parse the origin dataset.
+
+        Args:
+            partition: Partition identifier representing the content.
+            content: The data content object as returned by `.fetch()`.
+
+        Returns:
+            Data in Pandas DataFrame format.
+        """
 
 
-class CSV(Mixin[typing.IO], metaclass=abc.ABCMeta):
+class CSV(Mixin[provider.PartitionT, typing.IO], metaclass=abc.ABCMeta):
     """CSV parser mixin."""
 
     CSV_PARAMS: typing.Mapping = types.MappingProxyType({})
 
-    def parse(
-        self,
-        content: typing.IO,
-        columns: typing.Optional[typing.Iterable[dsl.Feature]],
-        predicate: typing.Optional[dsl.Feature],
-    ) -> pandas.DataFrame:
+    def parse(self, partition: provider.PartitionT, content: typing.IO) -> pandas.DataFrame:
+        """Parse the origin dataset.
+
+        Args:
+            partition: Partition identifier representing the content.
+            content: The data content object as returned by `.fetch()`.
+
+        Returns:
+            Data in Pandas DataFrame format.
+        """
         return pandas.read_csv(content, **self.CSV_PARAMS)

@@ -25,6 +25,7 @@ EXTRAS_DEV = {
     'black',
     'flake8-colors',
     'flake8-bugbear',
+    'flake8-typing-imports',
     'isort',
     'pip-tools',
     'pre-commit',
@@ -33,7 +34,14 @@ EXTRAS_DEV = {
     'pytest-cov',
 }
 
-EXTRAS_DOCS = {'sphinx', 'sphinxcontrib-napoleon', 'sphinx_rtd_theme'}
+EXTRAS_DOCS = {
+    'sphinx',
+    'sphinx-autodoc-typehints',
+    'sphinx-copybutton',
+    'sphinx-immaterial',
+    'sphinxcontrib-details-directive',
+    'sphinxcontrib-napoleon',
+}
 
 EXTRAS_KAGGLE = {'kaggle'}
 EXTRAS_SKLEARN = {'scikit-learn'}

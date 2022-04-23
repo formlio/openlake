@@ -20,7 +20,7 @@ default_language_version:
   python: python3
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.1.0
+  rev: v4.2.0
   hooks:
   - id: check-added-large-files
   - id: check-ast
@@ -34,19 +34,19 @@ repos:
   - id: mixed-line-ending
   - id: trailing-whitespace
 - repo: https://github.com/psf/black
-  rev: 22.1.0
+  rev: 22.3.0
   hooks:
   - id: black
     name: Black
     args: [--config=./pyproject.toml]
 - repo: https://github.com/asottile/pyupgrade
-  rev: v2.31.0
+  rev: v2.32.0
   hooks:
     - id: pyupgrade
       name: Python syntax upgrade
       args: [--py39-plus]
 - repo: https://github.com/hadialqattan/pycln
-  rev: v1.2.4
+  rev: v1.3.2
   hooks:
   - id: pycln
     name: Remove unused import statements

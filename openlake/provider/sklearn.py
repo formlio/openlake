@@ -17,6 +17,7 @@
 """
 Scikit-learn datasets providers.
 """
+import abc
 import typing
 
 import numpy
@@ -35,45 +36,46 @@ if typing.TYPE_CHECKING:
     from sklearn import utils
 
 
-class BreastCancer(provider.Origin['utils.Bunch']):
+class Partition(provider.Partition):
+    """Sklearn data partition representation."""
+
+    key = 'full'
+
+
+_PARTITIONS = tuple([Partition()])
+"""Each sklearn dataset bunch comes just as a single partition."""
+
+
+class Bunch(provider.Origin[Partition, 'utils.Bunch'], metaclass=abc.ABCMeta):
+    """Base class for sklearn dataset origins."""
+
+    def partitions(
+        self, columns: typing.Collection[dsl.Column], predicate: typing.Optional[dsl.Predicate]
+    ) -> typing.Iterable[Partition]:
+        return _PARTITIONS
+
+    def parse(self, partition: Partition, content: 'utils.Bunch') -> pandas.DataFrame:
+        data = numpy.column_stack([content['data'], content['target']])
+        return pandas.DataFrame(data, columns=[f.name for f in self.source.features])  # pylint: disable=not-an-iterable
+
+
+class BreastCancer(Bunch):
     """Breast cancer dataset."""
 
     @property
     def source(self) -> dsl.Queryable:
         return schema.BreastCancer
 
-    def fetch(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> 'utils.Bunch':
+    def fetch(self, partition: Partition) -> 'utils.Bunch':
         return datasets.load_breast_cancer()
 
-    def parse(
-        self,
-        content: 'utils.Bunch',
-        columns: typing.Optional[typing.Iterable[dsl.Feature]],
-        predicate: typing.Optional[dsl.Feature],
-    ) -> pandas.DataFrame:
-        data = numpy.column_stack([content['data'], content['target']])
-        return pandas.DataFrame(data, columns=[f.name for f in self.source.features])  # pylint: disable=not-an-iterable
 
-
-class Iris(provider.Origin['utils.Bunch']):
+class Iris(Bunch):
     """Iris dataset."""
 
     @property
     def source(self) -> dsl.Queryable:
         return schema.Iris
 
-    def fetch(
-        self, columns: typing.Optional[typing.Iterable[dsl.Feature]], predicate: typing.Optional[dsl.Feature]
-    ) -> 'utils.Bunch':
+    def fetch(self, partition: Partition) -> 'utils.Bunch':
         return datasets.load_iris()
-
-    def parse(
-        self,
-        content: 'utils.Bunch',
-        columns: typing.Optional[typing.Iterable[dsl.Feature]],
-        predicate: typing.Optional[dsl.Feature],
-    ) -> pandas.DataFrame:
-        data = numpy.column_stack([content['data'], content['target']])
-        return pandas.DataFrame(data, columns=[f.name for f in self.source.features])  # pylint: disable=not-an-iterable

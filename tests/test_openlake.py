@@ -15,30 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 """
-Openlake caching.
+Openlake unit tests.
 """
-import logging
-import pathlib
-import typing
+# pylint: disable=no-self-use
 
-import pandas
-from forml import conf
+import pickle
 
-DIR = conf.USRDIR / 'openlake'
+import pytest
 
-LOGGER = logging.getLogger(__name__)
+import openlake
 
 
-def dataframe(
-    key: str, loader: typing.Callable[[], pandas.DataFrame], cachedir: pathlib.Path = DIR
-) -> pandas.DataFrame:
-    """Return the dataframe for the given key - either from cache or via the loader followed by caching the content."""
-    stored = cachedir / f'{key}.parquet'
-    if stored.exists():
-        LOGGER.debug('[%s] cache hit', key)
-        return pandas.read_parquet(stored)
-    LOGGER.debug('[%s] cache miss', key)
-    frame = loader()
-    cachedir.mkdir(parents=True, exist_ok=True)
-    frame.to_parquet(stored, index=False, engine='pyarrow', flavor='spark')
-    return frame
+class TestLocal:
+    """Local feed unit tests."""
+
+    @staticmethod
+    @pytest.fixture(scope='session')
+    def feed() -> openlake.Local:
+        """Feed fixture."""
+        return openlake.Local()
+
+    def test_serializable(self, feed: openlake.Local):
+        """Feed serializability test."""
+        assert pickle.loads(pickle.dumps(feed))._readerkw == feed._readerkw  # pylint: disable=protected-access
