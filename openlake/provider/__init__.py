@@ -75,7 +75,7 @@ class Origin(typing.Generic[PartitionT, PayloadT], metaclass=abc.ABCMeta):
     @property
     def _cachedir(self) -> pathlib.Path:
         """Root directory for this origin cache."""
-        return cache.DIR / self.__class__.__qualname__.lower()
+        return cache.DIR / self.__class__.__module__.rsplit('.', 1)[-1]
 
     def _load(self, partitions: typing.Iterable[PartitionT]) -> pandas.DataFrame:
         """Content loader with caching capabilities.
