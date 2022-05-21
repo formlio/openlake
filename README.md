@@ -20,13 +20,13 @@
 Openlake
 ========
 
-[![GitHub Build](https://github.com/formlio/openlake/workflows/CI%20Build/badge.svg)](https://github.com/formlio/openlake/actions/)
+[![GitHub Build](https://img.shields.io/github/workflow/status/formlio/openlake/CI%20Build/main)](https://github.com/formlio/openlake/actions/)
 
 [![Documentation Status](https://readthedocs.org/projects/openlake/badge/?version=latest)](https://openlake.readthedocs.io/en/latest/)
-[![License](http://img.shields.io/:license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
+[![License](https://img.shields.io/pypi/l/openlake)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-![Python Version](https://img.shields.io/pypi/pyversions/openlake.svg)
-[![PyPI Version](https://badge.fury.io/py/openlake.svg)](https://pypi.org/project/openlake/)
+![Python Version](https://img.shields.io/pypi/pyversions/openlake)
+[![PyPI Version](https://img.shields.io/pypi/v/openlake)](https://pypi.org/project/openlake/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/openlake)](https://pypi.org/project/openlake/)
 
 
