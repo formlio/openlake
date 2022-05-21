@@ -16,7 +16,7 @@
 Openlake Documentation
 ======================
 
-Openlake is an auxiliary feed of the public datasets described using the :doc:`Openschema catalog<openschema>`
+Openlake is an auxiliary feed of the public datasets described using the :doc:`Openschema catalog<openschema:index>`
 and implementing the :doc:`ForML Feed API<forml:feed>`.
 
 Resources

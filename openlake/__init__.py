@@ -25,9 +25,9 @@ import typing
 import forml
 import sqlalchemy
 from forml import io
-from forml.extension.feed.reader.sql import alchemy
 from forml.io import dsl, layout
 from forml.io.dsl import parser as parsmod
+from forml.provider.feed.reader.sql import alchemy
 from sqlalchemy import sql
 from sqlalchemy.engine import interfaces
 
@@ -105,7 +105,7 @@ class Local(io.Feed[sql.Selectable, sql.ColumnElement]):
                 return 'OpenLakeLocalBackend'
 
             def __reduce__(self):
-                return self.__class__, tuple()
+                return self.__class__, ()
 
             def connect(self, **kwargs):
                 return self._engine.connect(**kwargs)
@@ -163,7 +163,7 @@ class Local(io.Feed[sql.Selectable, sql.ColumnElement]):
         super().__init__(origins=frozenset(origins), **readerkw)
 
     def __reduce__(self):
-        return self.__reduced, tuple()
+        return self.__reduced, ()
 
     @property
     def sources(self) -> typing.Mapping[dsl.Source, sql.Selectable]:

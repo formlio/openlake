@@ -42,8 +42,8 @@ class Partition(provider.Partition):
     key = 'full'
 
 
+# Each sklearn dataset bunch comes just as a single partition.
 _PARTITIONS = tuple([Partition()])
-"""Each sklearn dataset bunch comes just as a single partition."""
 
 
 class Bunch(provider.Origin[Partition, 'utils.Bunch'], metaclass=abc.ABCMeta):

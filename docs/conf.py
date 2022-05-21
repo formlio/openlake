@@ -49,15 +49,19 @@ release = openlake.__version__
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx_rtd_theme',
+    'sphinx_copybutton',
+    'sphinxcontrib.details.directive',
+    'sphinx_autodoc_typehints',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['templates']
+templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -69,6 +73,9 @@ intersphinx_mapping = {
     'openschema': ('https://openschema.readthedocs.org/en/latest/', None),
 }
 
+# Warn about all references where the target cannot be found
+nitpicky = False
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -76,14 +83,17 @@ intersphinx_mapping = {
 #
 html_theme = 'sphinx_rtd_theme'
 
+# Set link name generated in the top bar.
+html_title = 'OpenLake'
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['static']
+html_static_path = ['_static']
 
-html_show_sourcelink = False
-
+html_show_sourcelink = True
 html_show_copyright = False
+html_show_sphinx = False
 
 # == Extensions configuration ==================================================
 
@@ -91,8 +101,13 @@ html_show_copyright = False
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
 autoclass_content = 'both'
 autodoc_typehints = 'description'
+autosummary_generate = True
 
 # -- Options for sphinx.ext.napoleon --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
 napoleon_numpy_docstring = False
 napoleon_use_rtype = False
+napoleon_include_init_with_doc = True
+
+# -- Options for sphinx_autodoc_typehints --------------------------------------
+# See: https://pypi.org/project/sphinx-autodoc-typehints/

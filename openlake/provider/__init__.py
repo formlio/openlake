@@ -34,6 +34,7 @@ LOGGER = logging.getLogger(__name__)
 _DTYPES: typing.Mapping[dsl.Any, type] = {
     dsl.Integer(): int,
     dsl.Float(): float,
+    dsl.String(): object,
 }
 
 
