@@ -58,7 +58,7 @@ PartitionT = typing.TypeVar('PartitionT', bound=Partition)
 
 
 class Origin(typing.Generic[PartitionT, PayloadT], metaclass=abc.ABCMeta):
-    """Openlake origin base class."""
+    """Abstract base class for OpenLake data-source integrations."""
 
     def __hash__(self):
         return hash(self.source)

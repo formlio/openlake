@@ -17,3 +17,5 @@ OpenLake API
 ============
 
 .. autoclass:: openlake.Local
+
+.. autoclass:: openlake.provider.Origin
