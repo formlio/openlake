@@ -90,7 +90,22 @@ class _Columns(dsl.Source.Visitor):
 
 
 class Local(io.Feed[sql.Selectable, sql.ColumnElement]):
-    """Openlake feed."""
+    """ForML feed providing access to a number of public datasets.
+
+    External data-sources are fetched using the Openlake integrations and cached locally.
+
+    The provider can be enabled using the following :ref:`platform configuration <forml:platform-config>`:
+
+    .. code-block:: toml
+       :caption: config.toml
+
+        [FEED.openlake]
+        provider = "openlake"
+
+    Important:
+        Select the relevant :ref:`extras to install <install-extras>` OpenLake together with the particular
+        integrations (e.g. Kaggle, Sklearn, etc.).
+    """
 
     class Reader(alchemy.Reader):
         """Extending the SQLAlchemy reader."""

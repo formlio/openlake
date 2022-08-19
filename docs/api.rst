@@ -13,7 +13,7 @@
     specific language governing permissions and limitations
     under the License.
 
-License
-=======
+OpenLake API
+============
 
-.. literalinclude:: ../LICENSE
+.. autoclass:: openlake.Local

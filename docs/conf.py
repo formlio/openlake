@@ -14,12 +14,14 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+"""
+Configuration file for the Sphinx documentation builder.
 
-# Configuration file for the Sphinx documentation builder.
-#
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
+This file only contains a selection of the most common options. For a full
+list see the documentation:
+http://www.sphinx-doc.org/en/master/config
+"""
+# pylint: disable=invalid-name
 
 # -- Path setup --------------------------------------------------------------
 
@@ -32,7 +34,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('..'))
 
-import openlake  # noqa: E402
+import openlake  # pylint: disable=wrong-import-position; # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
@@ -57,7 +59,6 @@ extensions = [
     'sphinx_rtd_theme',
     'sphinx_copybutton',
     'sphinxcontrib.details.directive',
-    'sphinx_autodoc_typehints',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -71,6 +72,7 @@ exclude_patterns = ['_build']
 intersphinx_mapping = {
     'forml': ('https://docs.forml.io/en/latest/', None),
     'openschema': ('https://openschema.readthedocs.org/en/latest/', None),
+    'pip': ('https://pip.pypa.io/en/stable/', None),
 }
 
 # Warn about all references where the target cannot be found
@@ -99,15 +101,9 @@ html_show_sphinx = False
 
 # -- Options for sphinx.ext.autodoc --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
-autoclass_content = 'both'
-autodoc_typehints = 'description'
+autodoc_typehints = 'signature'
 autosummary_generate = True
 
 # -- Options for sphinx.ext.napoleon --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
 napoleon_numpy_docstring = False
-napoleon_use_rtype = False
-napoleon_include_init_with_doc = True
-
-# -- Options for sphinx_autodoc_typehints --------------------------------------
-# See: https://pypi.org/project/sphinx-autodoc-typehints/

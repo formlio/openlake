@@ -14,25 +14,26 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-"""
-Openlake unit tests.
-"""
-import pickle
 
-import pytest
+root = true
 
-import openlake
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+max_line_length = 120
+tab_width = 4
+trim_trailing_whitespace = true
 
+[*.py]
+ij_visual_guides = 100
 
-class TestLocal:
-    """Local feed unit tests."""
+[*.rst]
+max_line_length = 100
+ij_wrap_on_typing = true
+ij_any_wrap_long_lines = true
 
-    @staticmethod
-    @pytest.fixture(scope='session')
-    def feed() -> openlake.Local:
-        """Feed fixture."""
-        return openlake.Local()
-
-    def test_serializable(self, feed: openlake.Local):
-        """Feed serializability test."""
-        assert pickle.loads(pickle.dumps(feed))._readerkw == feed._readerkw  # pylint: disable=protected-access
+[Makefile]
+indent_style = tab

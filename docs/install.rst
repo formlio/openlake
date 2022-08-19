@@ -13,39 +13,48 @@
     specific language governing permissions and limitations
     under the License.
 
+.. _install:
+
 Installation
 ============
 
-To install Openlake, simply use ``pip``::
+To install Openlake, simply use :doc:`pip <pip:cli/pip_install>`:
 
-    pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[providers]'
+.. code-block:: console
 
+    $ pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[providers]'
+
+
+.. _install-extras:
 
 Extra Options
 -------------
 
-+-----------+---------------------------------------+----------------------------------------------------------------+
-| Feature   | Install Command                       | Description                                                    |
-+===========+=======================================+================================================================+
-| all       | ``pip install 'openlake[all]'``       | All extra features                                             |
-+-----------+---------------------------------------+----------------------------------------------------------------+
-| dev       | ``pip install 'openlake[dev]'``       | Openlake development tools                                     |
-+-----------+---------------------------------------+----------------------------------------------------------------+
-| docs      | ``pip install 'openlake[docs]'``      | Documentation publishing dependencies                          |
-+-----------+---------------------------------------+----------------------------------------------------------------+
-| kaggle    | ``pip install 'openlake[kaggle]'``    | Kaggle datasets provider                                       |
-+-----------+---------------------------------------+----------------------------------------------------------------+
-| sklearn   | ``pip install 'openlake[sklearn]'``   | Sklearn datasets provider                                      |
-+-----------+---------------------------------------+----------------------------------------------------------------+
-| providers | ``pip install 'openlake[providers]'`` | All providers combined                                         |
-+-----------+---------------------------------------+----------------------------------------------------------------+
++-----------+---------------------------------------+----------------------------------------------+
+| Feature   | Install Command                       | Description                                  |
++===========+=======================================+==============================================+
+| all       | ``pip install 'openlake[all]'``       | All extra features                           |
++-----------+---------------------------------------+----------------------------------------------+
+| dev       | ``pip install 'openlake[dev]'``       | Openlake development tools                   |
++-----------+---------------------------------------+----------------------------------------------+
+| docs      | ``pip install 'openlake[docs]'``      | Documentation publishing dependencies        |
++-----------+---------------------------------------+----------------------------------------------+
+| kaggle    | ``pip install 'openlake[kaggle]'``    | Kaggle datasets provider                     |
++-----------+---------------------------------------+----------------------------------------------+
+| sklearn   | ``pip install 'openlake[sklearn]'``   | Sklearn datasets provider                    |
++-----------+---------------------------------------+----------------------------------------------+
+| providers | ``pip install 'openlake[providers]'`` | All providers combined                       |
++-----------+---------------------------------------+----------------------------------------------+
 
 Configuration
 -------------
 
 This Openlake feed becomes available to ForML projects after referencing it from
-the :doc:`platform configuration<forml:platform>`. Following is the example configuration file enabling the Openlake
-feed::
+the :doc:`platform configuration <forml:platform>`. Following is the example configuration file
+enabling the :class:`openlake.Local` feed:
+
+.. code-block:: toml
+   :caption: config.toml
 
     logcfg = "logging.ini"
 
