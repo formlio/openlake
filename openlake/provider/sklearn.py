@@ -63,7 +63,7 @@ class BreastCancer(Bunch):
     """Breast cancer dataset."""
 
     @property
-    def source(self) -> dsl.Queryable:
+    def source(self) -> dsl.Source:
         return schema.BreastCancer
 
     def fetch(self, partition: Partition) -> 'utils.Bunch':
@@ -74,7 +74,7 @@ class Iris(Bunch):
     """Iris dataset."""
 
     @property
-    def source(self) -> dsl.Queryable:
+    def source(self) -> dsl.Source:
         return schema.Iris
 
     def fetch(self, partition: Partition) -> 'utils.Bunch':

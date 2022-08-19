@@ -109,7 +109,7 @@ class Origin(typing.Generic[PartitionT, PayloadT], metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
-    def source(self) -> dsl.Queryable:
+    def source(self) -> dsl.Source:
         """The source query this origin provides."""
 
     @abc.abstractmethod

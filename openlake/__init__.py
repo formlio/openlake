@@ -26,7 +26,6 @@ import forml
 import sqlalchemy
 from forml import io
 from forml.io import dsl, layout
-from forml.io.dsl import parser as parsmod
 from forml.provider.feed.reader.sql import alchemy
 from sqlalchemy import sql
 from sqlalchemy.engine import interfaces
@@ -49,28 +48,28 @@ class _Columns(dsl.Source.Visitor):
         self._items: set[dsl.Column] = set()
 
     @classmethod
-    def extract(cls, query: dsl.Query) -> frozenset[dsl.Column]:
+    def extract(cls, statement: dsl.Statement) -> frozenset[dsl.Column]:
         """Frontend method for extracting all involved columns from the given query.
 
         Args:
-            query: Query to extract the columns from.
+            statement: Query to extract the columns from.
 
         Return:
             Set of columns involved in the query.
         """
-        return cls()(query)
+        return cls()(statement)
 
-    def __call__(self, query: dsl.Query) -> frozenset[dsl.Column]:
+    def __call__(self, statement: dsl.Statement) -> frozenset[dsl.Column]:
         """Apply this visitor to the given query.
 
         Args:
-            query: Query to dissect.
+            statement: Query to dissect.
 
         Returns:
             Set of dsl.Column instances involved in the query.
         """
         self._items = set()
-        query.accept(self)
+        statement.accept(self)
         return frozenset(self._items)
 
     def visit_join(self, source: dsl.Join) -> None:
@@ -143,19 +142,19 @@ class Local(io.Feed[sql.Selectable, sql.ColumnElement]):
 
         def __init__(
             self,
-            sources: typing.Mapping[dsl.Source, parsmod.Source],
-            features: typing.Mapping[dsl.Feature, parsmod.Feature],
+            sources: typing.Mapping[dsl.Source, sql.Selectable],
+            features: typing.Mapping[dsl.Feature, sql.ColumnElement],
             origins: typing.Iterable[provider.Origin],
             **kwargs,
         ):
             self._loaded: dict[provider.Origin, frozenset[provider.Partition]] = {}
-            self._origins: dict[dsl.Queryable, provider.Origin] = {o.source: o for o in origins}
+            self._origins: dict[dsl.Source, provider.Origin] = {o.source: o for o in origins}
             self._backend: Local.Reader.Backend = self.Backend()
             super().__init__(sources, features, self._backend, **kwargs)
 
-        def __call__(self, query: dsl.Query, entry: typing.Optional[layout.Entry] = None) -> layout.Tabular:
+        def __call__(self, statement: dsl.Statement, entry: typing.Optional[layout.Entry] = None) -> layout.Tabular:
             items = (
-                (t, tuple(g)) for t, g in itertools.groupby(sorted(_Columns.extract(query)), key=lambda c: c.origin)
+                (t, tuple(g)) for t, g in itertools.groupby(sorted(_Columns.extract(statement)), key=lambda c: c.origin)
             )
             for table, columns in items:
                 LOGGER.debug('Request for %s using columns: %s', table, columns)
@@ -166,7 +165,7 @@ class Local(io.Feed[sql.Selectable, sql.ColumnElement]):
                 if origin not in self._loaded or not self._loaded[origin].symmetric_difference(partitions):
                     origin(partitions).to_sql(origin.key, self._backend, index=False, if_exists='replace')
                     self._loaded[origin] = frozenset(partitions)
-            return super().__call__(query, entry)
+            return super().__call__(statement, entry)
 
     def __init__(self, *origins: provider.Origin, **readerkw):
         if not origins:

@@ -22,9 +22,9 @@ import pathlib
 import typing
 
 import pandas
-from forml import conf
+from forml import setup
 
-DIR = conf.USRDIR / 'openlake'
+DIR = setup.USRDIR / 'openlake'
 
 LOGGER = logging.getLogger(__name__)
 

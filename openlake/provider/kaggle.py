@@ -25,7 +25,7 @@ import pathlib
 import typing
 
 import forml
-from forml import conf
+from forml import setup
 from forml.io import dsl
 from openschema import kaggle as schema
 
@@ -67,8 +67,8 @@ class File(fetcher.Mixin[Partition, typing.IO], metaclass=abc.ABCMeta):
         raise forml.MissingError('No partition satisfy the column requirement')
 
     def fetch(self, partition: Partition) -> typing.IO:
-        kaggle.api.competition_download_file(self.COMPETITION, partition.filename, conf.tmpdir, force=True, quiet=True)
-        return open(os.path.join(conf.tmpdir, partition.filename), encoding='utf8')
+        kaggle.api.competition_download_file(self.COMPETITION, partition.filename, setup.tmpdir, force=True, quiet=True)
+        return open(os.path.join(setup.tmpdir, partition.filename), encoding='utf8')
 
 
 class Titanic(File, parser.CSV, provider.Origin):
@@ -96,5 +96,5 @@ class Titanic(File, parser.CSV, provider.Origin):
     )
 
     @property
-    def source(self) -> dsl.Queryable:
+    def source(self) -> dsl.Source:
         return schema.Titanic
