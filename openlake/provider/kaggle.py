@@ -59,14 +59,14 @@ class File(fetcher.Mixin[Partition, typing.IO], metaclass=abc.ABCMeta):
 
     def partitions(
         self, columns: typing.Collection[dsl.Column], predicate: typing.Optional[dsl.Predicate]
-    ) -> typing.Iterable[provider.Partition]:
+    ) -> typing.Iterable[Partition]:
         columns = set(columns)
         for partition in self.PARTITIONS:
             if columns.issubset(partition.columns):
                 return tuple([partition])
         raise forml.MissingError('No partition satisfy the column requirement')
 
-    def fetch(self, partition: Partition) -> typing.IO:
+    def fetch(self, partition: typing.Optional[Partition]) -> typing.IO:
         kaggle.api.competition_download_file(self.COMPETITION, partition.filename, setup.tmpdir, force=True, quiet=True)
         return open(os.path.join(setup.tmpdir, partition.filename), encoding='utf8')
 

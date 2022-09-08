@@ -22,7 +22,7 @@ To install Openlake, simply use :doc:`pip <pip:cli/pip_install>`:
 
 .. code-block:: console
 
-    $ pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[providers]'
+    $ pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[all]'
 
 
 .. _install-extras:
@@ -33,7 +33,7 @@ Extra Options
 +-----------+---------------------------------------+----------------------------------------------+
 | Feature   | Install Command                       | Description                                  |
 +===========+=======================================+==============================================+
-| all       | ``pip install 'openlake[all]'``       | All extra features                           |
+| all       | ``pip install 'openlake[all]'``       | All providers                                |
 +-----------+---------------------------------------+----------------------------------------------+
 | dev       | ``pip install 'openlake[dev]'``       | Openlake development tools                   |
 +-----------+---------------------------------------+----------------------------------------------+
@@ -49,41 +49,12 @@ Extra Options
 Configuration
 -------------
 
-This Openlake feed becomes available to ForML projects after referencing it from
-the :doc:`platform configuration <forml:platform>`. Following is the example configuration file
+This Openlake feed becomes available within the ForML platform after referencing it from
+the :doc:`platform configuration <forml:platform>`. Following is snippet of the configuration file
 enabling the :class:`openlake.Local` feed:
 
 .. code-block:: toml
    :caption: config.toml
 
-    logcfg = "logging.ini"
-
-    [RUNNER]
-    default = "compute"
-
-    [RUNNER.compute]
-    provider = "dask"
-    scheduler = "multiprocessing"
-
-    [RUNNER.visual]
-    provider = "graphviz"
-    format = "png"
-
-    [REGISTRY]
-    default = "temp"
-
-    [REGISTRY.temp]
-    provider = "posix"
-    path = "/tmp/forml"
-
-    [FEED]
-    default = ["openlake"]
-
     [FEED.openlake]
     provider = "openlake:Local"
-
-    [SINK]
-    default = "print"
-
-    [SINK.print]
-    provider = "stdout"

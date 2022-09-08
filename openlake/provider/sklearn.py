@@ -36,25 +36,15 @@ if typing.TYPE_CHECKING:
     from sklearn import utils
 
 
-class Partition(provider.Partition):
-    """Sklearn data partition representation."""
-
-    key = 'full'
-
-
-# Each sklearn dataset bunch comes just as a single partition.
-_PARTITIONS = tuple([Partition()])
-
-
-class Bunch(provider.Origin[Partition, 'utils.Bunch'], metaclass=abc.ABCMeta):
+class Bunch(provider.Origin[None, 'utils.Bunch'], metaclass=abc.ABCMeta):
     """Base class for sklearn dataset origins."""
 
     def partitions(
         self, columns: typing.Collection[dsl.Column], predicate: typing.Optional[dsl.Predicate]
-    ) -> typing.Iterable[Partition]:
-        return _PARTITIONS
+    ) -> typing.Iterable[None]:
+        return ()
 
-    def parse(self, partition: Partition, content: 'utils.Bunch') -> pandas.DataFrame:
+    def parse(self, partition: None, content: 'utils.Bunch') -> pandas.DataFrame:
         data = numpy.column_stack([content['data'], content['target']])
         return pandas.DataFrame(data, columns=[f.name for f in self.source.features])  # pylint: disable=not-an-iterable
 
@@ -66,7 +56,7 @@ class BreastCancer(Bunch):
     def source(self) -> dsl.Source:
         return schema.BreastCancer
 
-    def fetch(self, partition: Partition) -> 'utils.Bunch':
+    def fetch(self, partition: None) -> 'utils.Bunch':
         return datasets.load_breast_cancer()
 
 
@@ -77,5 +67,5 @@ class Iris(Bunch):
     def source(self) -> dsl.Source:
         return schema.Iris
 
-    def fetch(self, partition: Partition) -> 'utils.Bunch':
+    def fetch(self, partition: None) -> 'utils.Bunch':
         return datasets.load_iris()

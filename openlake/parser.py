@@ -30,7 +30,7 @@ class Mixin(typing.Generic[provider.PartitionT, provider.PayloadT], abc.ABC):
     """Parser mixin base class."""
 
     @abc.abstractmethod
-    def parse(self, partition: provider.PartitionT, content: provider.PayloadT) -> pandas.DataFrame:
+    def parse(self, partition: typing.Optional[provider.PartitionT], content: provider.PayloadT) -> pandas.DataFrame:
         """Parse the origin dataset.
 
         Args:
@@ -47,7 +47,7 @@ class CSV(Mixin[provider.PartitionT, typing.IO], metaclass=abc.ABCMeta):
 
     CSV_PARAMS: typing.Mapping = types.MappingProxyType({})
 
-    def parse(self, partition: provider.PartitionT, content: typing.IO) -> pandas.DataFrame:
+    def parse(self, partition: typing.Optional[provider.PartitionT], content: typing.IO) -> pandas.DataFrame:
         """Parse the origin dataset.
 
         Args:
