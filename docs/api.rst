@@ -16,4 +16,4 @@
 OpenLake API
 ============
 
-.. autoclass:: openlake.Local
+.. autoclass:: openlake.Lite

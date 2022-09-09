@@ -51,7 +51,7 @@ Configuration
 
 This Openlake feed becomes available within the ForML platform after referencing it from
 the :doc:`platform configuration <forml:platform>`. Following is snippet of the configuration file
-enabling the :class:`openlake.Local` feed:
+enabling the :class:`openlake.Lite` feed:
 
 .. code-block:: toml
    :caption: config.toml
