@@ -18,7 +18,7 @@ black==22.8.0
     # via openlake (setup.py)
 build==0.8.0
     # via pip-tools
-certifi==2022.6.15
+certifi==2022.6.15.1
     # via
     #   kaggle
     #   requests
@@ -110,7 +110,7 @@ numpy==1.23.2
     #   pyarrow
     #   scikit-learn
     #   scipy
-openschema==0.3.dev3
+openschema==0.4.dev1
     # via openlake (setup.py)
 packaging==21.3
     # via

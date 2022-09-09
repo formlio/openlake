@@ -103,7 +103,10 @@ html_show_sphinx = False
 # -- Options for sphinx.ext.autodoc --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
 autodoc_typehints = 'signature'
+autodoc_member_order = 'bysource'
 autosummary_generate = True
+autosummary_ignore_module_all = False
+autosummary_imported_members = True
 
 # -- Options for sphinx.ext.napoleon --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html

@@ -41,8 +41,8 @@ EXTRAS_DOCS = {
     'sphinx-copybutton',
     'sphinx_rtd_theme',
     'sphinxcontrib-details-directive',
-    'sphinxcontrib-spelling',
     'sphinxcontrib-napoleon',
+    'sphinxcontrib-spelling',
 }
 
 EXTRAS_KAGGLE = {'kaggle'}
