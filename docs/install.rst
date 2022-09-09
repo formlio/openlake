@@ -57,4 +57,4 @@ enabling the :class:`openlake.Local` feed:
    :caption: config.toml
 
     [FEED.openlake]
-    provider = "openlake:Local"
+    provider = "openlake:Lite"

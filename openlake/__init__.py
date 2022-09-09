@@ -30,7 +30,7 @@ from openlake.provider import kaggle, sklearn
 ORIGINS: typing.Collection[lazy.Origin] = {kaggle.Titanic(), sklearn.BreastCancer(), sklearn.Iris()}
 
 
-class Local(lazy.Feed):
+class Lite(lazy.Feed):
     """ForML feed providing access to a number of public datasets.
 
     External data sources are fetched using the Openlake integrations and cached locally.
@@ -42,7 +42,7 @@ class Local(lazy.Feed):
        :caption: config.toml
 
         [FEED.openlake]
-        provider = "openlake:Local"
+        provider = "openlake:Lite"
 
     Important:
         Select the relevant :ref:`extras to install <install-extras>` OpenLake together with the
