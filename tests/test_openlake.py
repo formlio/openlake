@@ -17,7 +17,8 @@
 """
 Openlake unit tests.
 """
-import cloudpickle
+import pickle
+
 import pytest
 
 import openlake
@@ -34,4 +35,4 @@ class TestLocal:
 
     def test_serializable(self, feed: openlake.Local):
         """Feed serializability test."""
-        assert cloudpickle.loads(cloudpickle.dumps(feed)).__class__ == feed.__class__
+        assert pickle.loads(pickle.dumps(feed)).__class__ == feed.__class__
