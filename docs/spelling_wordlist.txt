@@ -1,9 +1,7 @@
-config
 dataset
 datasets
 dev
+Kaggle
 integrations
-kaggle
-openlake
-sklearn
-toml
+Openlake
+Scikit

@@ -41,7 +41,7 @@ Extra Options
 +-----------+---------------------------------------+----------------------------------------------+
 | kaggle    | ``pip install 'openlake[kaggle]'``    | Kaggle datasets provider                     |
 +-----------+---------------------------------------+----------------------------------------------+
-| sklearn   | ``pip install 'openlake[sklearn]'``   | Sklearn datasets provider                    |
+| sklearn   | ``pip install 'openlake[sklearn]'``   | Scikit-learn datasets provider               |
 +-----------+---------------------------------------+----------------------------------------------+
 | providers | ``pip install 'openlake[providers]'`` | All providers combined                       |
 +-----------+---------------------------------------+----------------------------------------------+

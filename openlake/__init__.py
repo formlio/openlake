@@ -46,7 +46,7 @@ class Lite(lazy.Feed):
 
     Important:
         Select the relevant :ref:`extras to install <install-extras>` OpenLake together with the
-        particular integrations (e.g. Kaggle, Sklearn, etc.).
+        particular integrations (e.g. Kaggle, Scikit-learn, etc.).
     """
 
     def __init__(self, *origins: lazy.Origin):

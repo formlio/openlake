@@ -33,15 +33,16 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('.'))
 
-import openlake  # pylint: disable=wrong-import-position; # noqa: E402
+import _doc  # pylint: disable=wrong-import-position; # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
 project = 'Openlake'
 
 # The full version, including alpha/beta/rc tags
-release = openlake.__version__
+release = _doc.VERSION
 
 
 # -- General configuration ---------------------------------------------------
@@ -108,6 +109,12 @@ autosummary_generate = True
 autosummary_ignore_module_all = False
 autosummary_imported_members = True
 
+
 # -- Options for sphinx.ext.napoleon --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
 napoleon_numpy_docstring = False
+
+
+# -- Options for sphinxcontrib-spelling-------------------------
+# See: https://sphinxcontrib-spelling.readthedocs.io/en/latest/
+spelling_filters = ['_doc.Filter']
