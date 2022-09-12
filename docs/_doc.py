@@ -14,18 +14,22 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
----
-version: 2
+"""
+Sphinx customization.
+"""
 
-build:
-  os: ubuntu-22.04
-  tools:
-    python: "3.10"
+from enchant import tokenize
 
-python:
-  install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - all
-        - docs
+import openlake
+
+VERSION = openlake.__version__
+
+
+class Filter(tokenize.Filter):
+    """Custom spell-checking filter."""
+
+    SUFFIXES = 'py', 'toml'
+    """File suffixes."""
+
+    def _skip(self, word):
+        return any(word.endswith(f'.{s}') for s in self.SUFFIXES)

@@ -29,10 +29,10 @@ class TestLocal:
 
     @staticmethod
     @pytest.fixture(scope='session')
-    def feed() -> openlake.Local:
+    def feed() -> openlake.Lite:
         """Feed fixture."""
-        return openlake.Local()
+        return openlake.Lite()
 
-    def test_serializable(self, feed: openlake.Local):
+    def test_serializable(self, feed: openlake.Lite):
         """Feed serializability test."""
-        assert pickle.loads(pickle.dumps(feed))._readerkw == feed._readerkw  # pylint: disable=protected-access
+        assert pickle.loads(pickle.dumps(feed)).__class__ == feed.__class__

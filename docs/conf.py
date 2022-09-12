@@ -33,15 +33,16 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('.'))
 
-import openlake  # pylint: disable=wrong-import-position; # noqa: E402
+import _doc  # pylint: disable=wrong-import-position; # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
 project = 'Openlake'
 
 # The full version, including alpha/beta/rc tags
-release = openlake.__version__
+release = _doc.VERSION
 
 
 # -- General configuration ---------------------------------------------------
@@ -59,6 +60,7 @@ extensions = [
     'sphinx_rtd_theme',
     'sphinx_copybutton',
     'sphinxcontrib.details.directive',
+    'sphinxcontrib.spelling',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -71,12 +73,12 @@ exclude_patterns = ['_build']
 
 intersphinx_mapping = {
     'forml': ('https://docs.forml.io/en/latest/', None),
-    'openschema': ('https://openschema.readthedocs.org/en/latest/', None),
+    'openschema': ('https://openschema.readthedocs.io/en/latest/', None),
     'pip': ('https://pip.pypa.io/en/stable/', None),
 }
 
 # Warn about all references where the target cannot be found
-nitpicky = False
+nitpicky = True
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -91,7 +93,7 @@ html_title = 'OpenLake'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ['_static']
 
 html_show_sourcelink = True
 html_show_copyright = False
@@ -102,8 +104,17 @@ html_show_sphinx = False
 # -- Options for sphinx.ext.autodoc --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
 autodoc_typehints = 'signature'
+autodoc_member_order = 'bysource'
 autosummary_generate = True
+autosummary_ignore_module_all = False
+autosummary_imported_members = True
+
 
 # -- Options for sphinx.ext.napoleon --------------------------------------------
 # See: https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
 napoleon_numpy_docstring = False
+
+
+# -- Options for sphinxcontrib-spelling-------------------------
+# See: https://sphinxcontrib-spelling.readthedocs.io/en/latest/
+spelling_filters = ['_doc.Filter']

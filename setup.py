@@ -33,6 +33,7 @@ EXTRAS_DEV = {
     'pycln',
     'pylint',
     'pytest-cov',
+    'pytest-xdist',
 }
 
 EXTRAS_DOCS = {
@@ -41,14 +42,13 @@ EXTRAS_DOCS = {
     'sphinx_rtd_theme',
     'sphinxcontrib-details-directive',
     'sphinxcontrib-napoleon',
+    'sphinxcontrib-spelling',
 }
 
 EXTRAS_KAGGLE = {'kaggle'}
 EXTRAS_SKLEARN = {'scikit-learn'}
 
-EXTRAS_PROVIDERS = EXTRAS_KAGGLE | EXTRAS_SKLEARN
-
-EXTRAS_ALL = EXTRAS_DEV | EXTRAS_DOCS | EXTRAS_PROVIDERS
+EXTRAS_ALL = EXTRAS_KAGGLE | EXTRAS_SKLEARN
 
 setuptools.setup(
     name='openlake',
@@ -61,18 +61,17 @@ setuptools.setup(
     license='Apache License 2.0',
     packages=setuptools.find_packages(include=['openlake*'], where=os.path.dirname(__file__)),
     setup_requires=['setuptools', 'wheel'],
-    install_requires=['forml[sql]', 'openschema', 'pandas', 'pyarrow', 'sqlalchemy'],
+    install_requires=['forml[sql]==0.8', 'openschema', 'pandas', 'pyarrow', 'sqlalchemy'],
     extras_require={
         'all': EXTRAS_ALL,
         'dev': EXTRAS_DEV,
         'docs': EXTRAS_DOCS,
         'kaggle': EXTRAS_KAGGLE,
         'sklearn': EXTRAS_SKLEARN,
-        'providers': EXTRAS_PROVIDERS,
     },
     python_requires='>=3',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
