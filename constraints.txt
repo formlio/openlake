@@ -110,7 +110,7 @@ numpy==1.23.3
     #   pyarrow
     #   scikit-learn
     #   scipy
-openschema==0.4.dev1
+openschema==0.4.dev2
     # via openlake (setup.py)
 packaging==21.3
     # via

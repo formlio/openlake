@@ -58,3 +58,11 @@ enabling the :class:`openlake.Lite` feed:
 
     [FEED.openlake]
     provider = "openlake:Lite"
+
+
+Kaggle API Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to fetch the datasets using the Kaggle API, you must first configure your access token
+stored under the :file:`~/.kaggle/kaggle.json`. For more details, see the `Kaggle API
+Documentation <https://www.kaggle.com/docs/api>`_.
