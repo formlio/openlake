@@ -17,8 +17,7 @@
 
 """Openlake ForML feed."""
 
-__version__ = '0.3.dev1'
-__author__ = 'ForML Authors'
+__version__ = '0.4.dev1'
 
 import typing
 

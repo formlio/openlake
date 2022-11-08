@@ -1,7 +1,7 @@
 dataset
 datasets
 dev
-Kaggle
 integrations
+Kaggle
 Openlake
 Scikit
