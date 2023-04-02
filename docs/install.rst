@@ -22,7 +22,7 @@ To install Openlake, simply use :doc:`pip <pip:cli/pip_install>`:
 
 .. code-block:: console
 
-    $ pip install --constraints https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[all]'
+    $ pip install --constraint https://raw.githubusercontent.com/formlio/openlake/main/constraints.txt 'openlake[all]'
 
 
 .. _install-extras:
@@ -66,3 +66,8 @@ Kaggle API Authentication
 In order to fetch the datasets using the Kaggle API, you must first configure your access token
 stored under the :file:`~/.kaggle/kaggle.json`. For more details, see the `Kaggle API
 Documentation <https://www.kaggle.com/docs/api>`_.
+
+ .. attention::
+    You must read and accept the rules of *each individual Kaggle competition* in order to download
+    its dataset. This cannot be done programmatically - you must do this by visiting the Kaggle
+    website and accepting the rules there.

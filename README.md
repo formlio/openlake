@@ -20,7 +20,7 @@
 Openlake
 ========
 
-[![GitHub Build](https://img.shields.io/github/workflow/status/formlio/openlake/CI%20Build/main)](https://github.com/formlio/openlake/actions/)
+[![GitHub Build](https://img.shields.io/github/actions/workflow/status/formlio/openlake/ci.yml?branch=main)](https://github.com/formlio/openlake/actions/)
 
 [![Documentation Status](https://readthedocs.org/projects/openlake/badge/?version=latest)](https://openlake.readthedocs.io/en/latest/)
 [![License](https://img.shields.io/pypi/l/openlake)](http://www.apache.org/licenses/LICENSE-2.0.txt)

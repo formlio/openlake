@@ -20,6 +20,7 @@ Kaggle datasets providers.
 import abc
 import collections
 import functools
+import logging
 import os
 import pathlib
 import typing
@@ -35,6 +36,9 @@ try:
     import kaggle
 except Exception as err:  # pylint: disable=broad-except
     kaggle = provider.Unavailable('kaggle', err)
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class Partition(provider.Partition, collections.namedtuple('Partition', 'columns, filename')):
@@ -67,8 +71,9 @@ class File(fetcher.Mixin[Partition, typing.IO], metaclass=abc.ABCMeta):
         raise forml.MissingError('No partition satisfy the column requirement')
 
     def fetch(self, partition: typing.Optional[Partition]) -> typing.IO:
+        LOGGER.info('Fetching %s from %s', partition.filename, self.COMPETITION)
         kaggle.api.competition_download_file(self.COMPETITION, partition.filename, setup.tmpdir, force=True, quiet=True)
-        return open(os.path.join(setup.tmpdir, partition.filename), encoding='utf8')
+        return open(os.path.join(setup.tmpdir, partition.filename), 'rb')
 
 
 class Titanic(File, parser.CSV, provider.Origin):
@@ -98,3 +103,45 @@ class Titanic(File, parser.CSV, provider.Origin):
     @property
     def source(self) -> dsl.Source:
         return schema.Titanic
+
+
+class Avazu(File, parser.CSV, provider.Origin):
+    """Avazu dataset."""
+
+    COMPETITION = 'avazu-ctr-prediction'
+    PARTITIONS = (
+        Partition(
+            (
+                schema.Avazu.id,
+                schema.Avazu.hour,
+                schema.Avazu.C1,
+                schema.Avazu.banner_pos,
+                schema.Avazu.site_id,
+                schema.Avazu.site_domain,
+                schema.Avazu.site_category,
+                schema.Avazu.app_id,
+                schema.Avazu.app_domain,
+                schema.Avazu.app_category,
+                schema.Avazu.device_id,
+                schema.Avazu.device_ip,
+                schema.Avazu.device_model,
+                schema.Avazu.device_type,
+                schema.Avazu.device_conn_type,
+                schema.Avazu.C14,
+                schema.Avazu.C15,
+                schema.Avazu.C16,
+                schema.Avazu.C17,
+                schema.Avazu.C18,
+                schema.Avazu.C19,
+                schema.Avazu.C20,
+                schema.Avazu.C21,
+            ),
+            'test.gz',
+        ),  # Testset partition
+        Partition(schema.Avazu.features, 'train.gz'),  # Trainset partition
+    )
+    CSV_PARAMS = {'compression': 'gzip'}
+
+    @property
+    def source(self) -> dsl.Source:
+        return schema.Avazu

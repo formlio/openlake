@@ -44,8 +44,7 @@ classifiers = [
 dependencies = [
     "forml[sql]",
     "openschema",
-    "pandas",
-    "pyarrow",
+    "pandas[parquet]",
     "sqlalchemy",
 ]
 [project.optional-dependencies]

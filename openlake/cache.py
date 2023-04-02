@@ -24,7 +24,7 @@ import typing
 import pandas
 from forml import setup
 
-DIR = setup.USRDIR / 'openlake'
+DIR = setup.USRDIR / '.cache' / 'openlake'
 
 LOGGER = logging.getLogger(__name__)
 

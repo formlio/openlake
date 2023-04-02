@@ -17,7 +17,7 @@
 
 """Openlake ForML feed."""
 
-__version__ = '0.4.dev1'
+__version__ = '0.5.dev1'
 
 import typing
 
@@ -26,7 +26,7 @@ from forml.provider.feed import lazy
 from openlake.provider import kaggle, sklearn
 
 #: Default list of origin integrations.
-ORIGINS: typing.Collection[lazy.Origin] = {kaggle.Titanic(), sklearn.BreastCancer(), sklearn.Iris()}
+ORIGINS: typing.Collection[lazy.Origin] = {kaggle.Avazu(), kaggle.Titanic(), sklearn.BreastCancer(), sklearn.Iris()}
 
 
 class Lite(lazy.Feed):
