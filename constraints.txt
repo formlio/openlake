@@ -8,10 +8,8 @@ alabaster==0.7.13
     # via sphinx
 astroid==2.15.2
     # via pylint
-attrs==22.2.0
-    # via
-    #   flake8-bugbear
-    #   pytest
+attrs==23.1.0
+    # via flake8-bugbear
 babel==2.12.1
     # via sphinx
 black==23.3.0
@@ -65,7 +63,7 @@ flake8-colors==0.1.9
     # via openlake (pyproject.toml)
 flake8-typing-imports==1.14.0
     # via openlake (pyproject.toml)
-forml==0.91
+forml==0.92
     # via
     #   openlake (pyproject.toml)
     #   openschema
@@ -115,9 +113,9 @@ numpy==1.24.2
     #   pyarrow
     #   scikit-learn
     #   scipy
-openschema==0.6.dev1
+openschema==0.6.dev2
     # via openlake (pyproject.toml)
-packaging==23.0
+packaging==23.1
     # via
     #   black
     #   build
@@ -155,13 +153,13 @@ pyenchant==3.2.2
     # via sphinxcontrib-spelling
 pyflakes==3.0.1
     # via flake8
-pygments==2.14.0
+pygments==2.15.0
     # via sphinx
 pylint==2.17.2
     # via openlake (pyproject.toml)
 pyproject-hooks==1.0.0
     # via build
-pytest==7.2.2
+pytest==7.3.1
     # via
     #   pytest-cov
     #   pytest-xdist
@@ -213,7 +211,7 @@ sphinx==6.1.3
     #   sphinxcontrib-details-directive
     #   sphinxcontrib-jquery
     #   sphinxcontrib-spelling
-sphinx-copybutton==0.5.1
+sphinx-copybutton==0.5.2
     # via openlake (pyproject.toml)
 sphinx-rtd-theme==1.2.0
     # via openlake (pyproject.toml)

@@ -140,7 +140,11 @@ class Avazu(File, parser.CSV, provider.Origin):
         ),  # Testset partition
         Partition(schema.Avazu.features, 'train.gz'),  # Trainset partition
     )
-    CSV_PARAMS = {'compression': 'gzip'}
+    CSV_PARAMS = {
+        'compression': 'gzip',
+        'parse_dates': ['hour'],
+        'date_format': '%y%m%d%H',
+    }
 
     @property
     def source(self) -> dsl.Source:
